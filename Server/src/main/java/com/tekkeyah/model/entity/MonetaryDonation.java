@@ -50,14 +50,6 @@ public class MonetaryDonation extends Donation {
             this.transactionRefID = "TXN-" + UUID.randomUUID().toString().substring(0, 8).toUpperCase();
         }
         System.out.println("Processing monetary donation of amount: $" + amount + " with Ref ID: " + transactionRefID);
-        // Depends on Subject/Observer from outside the donation classes section:
-        // notifyObservers("Monetary donation of $" + amount + " processed. Ref: " + transactionRefID);
-    }
-
-    @Override
-    public Receipt generateReceipt() {
-        Receipt r = new Receipt(this);
-        this.receipt = r;
-        return r;
+        notifyObservers("Monetary donation of $" + amount + " processed. Ref: " + transactionRefID);
     }
 }

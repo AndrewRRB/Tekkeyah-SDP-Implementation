@@ -25,25 +25,6 @@ public class InKindDonationCreator extends DonationCreator {
 
     @Override
     public Donation createDonation() {
-        InKindDonation donation = new InKindDonation();
-        donation.setItemsDonated(this.itemsDonated);
-        donation.setAmount(this.estimatedValue);
-        return donation;
-    }
-
-    public String[] getItemsDonated() {
-        return itemsDonated;
-    }
-
-    public void setItemsDonated(String[] itemsDonated) {
-        this.itemsDonated = itemsDonated;
-    }
-
-    public double getEstimatedValue() {
-        return estimatedValue;
-    }
-
-    public void setEstimatedValue(double estimatedValue) {
-        this.estimatedValue = estimatedValue;
+        return new InKindDonation(this.itemsDonated, this.estimatedValue);
     }
 }

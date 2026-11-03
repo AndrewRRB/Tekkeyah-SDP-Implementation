@@ -22,12 +22,4 @@ public class MonetaryDonationCreator extends DonationCreator {
         donation.setAmount(this.amount);
         return donation;
     }
-
-    public double getAmount() {
-        return amount;
-    }
-
-    public void setAmount(double amount) {
-        this.amount = amount;
-    }
 }

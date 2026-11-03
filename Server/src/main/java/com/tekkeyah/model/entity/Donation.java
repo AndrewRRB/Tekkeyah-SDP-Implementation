@@ -2,9 +2,8 @@ package com.tekkeyah.model.entity;
 
 import jakarta.persistence.*;
 
-// Depends on Subject and Observer from outside the donation classes section (Observer pattern)
-// import com.tekkeyah.pattern.observer.Subject;
-// import com.tekkeyah.pattern.observer.Observer;
+import java.util.Observable;
+import java.util.Observer;
 
 // Depends on Donor and Beneficiary from outside the donation classes section (User hierarchy)
 // import com.tekkeyah.model.entity.Donor;
@@ -13,7 +12,7 @@ import jakarta.persistence.*;
 @Entity
 @Table(name = "donations")
 @Inheritance(strategy = InheritanceType.JOINED)
-public abstract class Donation /* implements Subject */ {
+public abstract class Donation extends Observable/* implements Subject */ {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,9 +26,6 @@ public abstract class Donation /* implements Subject */ {
     // Depends on Beneficiary from outside the donation classes section (User hierarchy)
     // protected Beneficiary beneficiary;
 
-    // Depends on Observer from outside the donation classes section (Observer pattern)
-    // private List<Observer> observers;
-
     @OneToOne(mappedBy = "donation", cascade = CascadeType.ALL)
     protected Receipt receipt;
 
@@ -41,14 +37,8 @@ public abstract class Donation /* implements Subject */ {
 
     public abstract void process();
 
-    public abstract Receipt generateReceipt();
-
     public int getDonationID() {
         return donationID;
-    }
-
-    public void setDonationID(int donationID) {
-        this.donationID = donationID;
     }
 
     public double getAmount() {
@@ -83,18 +73,20 @@ public abstract class Donation /* implements Subject */ {
     //     this.beneficiary = beneficiary;
     // }
 
-    // Depends on Observer / Subject from outside the donation classes section (Observer pattern)
-    // public void attach(Observer o) {
-    //     if (o != null && !observers.contains(o)) {
-    //         observers.add(o);
-    //     }
-    // }
-    // public void detach(Observer o) {
-    //     observers.remove(o);
-    // }
-    // public void notifyObservers(String msg) {
-    //     for (Observer o : observers) {
-    //         o.update(this, msg);
-    //     }
-    // }
+     public void attach(Observer o) {
+         this.addObserver(o);
+     }
+     public void detach(Observer o) {
+        this.deleteObserver(o);
+     }
+     public void notifyObservers(String msg) {
+         setChanged();
+         super.notifyObservers(msg);
+     }
+
+    public Receipt generateReceipt() {
+        Receipt r = new Receipt(this);
+        this.receipt = r;
+        return r;
+    }
 }

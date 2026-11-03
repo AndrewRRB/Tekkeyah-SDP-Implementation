@@ -39,14 +39,8 @@ public class InKindDonation extends Donation {
                 ? String.join(", ", itemsDonated)
                 : "None";
         System.out.println("Processing in-kind donation with items: " + items);
-        // Depends on Subject/Observer from outside the donation classes section:
-        // notifyObservers("In-kind donation processed with items: " + items);
+        notifyObservers("In-kind donation processed with items: " + items);
     }
 
-    @Override
-    public Receipt generateReceipt() {
-        Receipt r = new Receipt(this);
-        this.receipt = r;
-        return r;
-    }
+
 }
