@@ -1,0 +1,12 @@
+.tk-landing-page {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  width: 100%;
+  background-color: var(--tk-surface-page);
+}
+
+.tk-landing-page main {
+  flex-grow: 1;
+  width: 100%;
+}

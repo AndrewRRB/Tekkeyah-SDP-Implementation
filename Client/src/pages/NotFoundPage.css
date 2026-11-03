@@ -1,0 +1,41 @@
+.tk-not-found-page {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 2rem;
+  background-color: var(--tk-surface-page);
+}
+
+.tk-not-found-card {
+  text-align: center;
+  max-width: 460px;
+  padding: 3rem 2rem;
+  background-color: var(--tk-surface-card);
+  border-radius: var(--tk-radius-xl);
+  border: 1px solid var(--tk-border-card);
+  box-shadow: var(--tk-shadow-md);
+}
+
+.tk-not-found-code {
+  font-size: 3.5rem;
+  font-weight: 800;
+  color: var(--tk-green-700);
+  line-height: 1;
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.tk-not-found-title {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--tk-text-primary);
+  margin-bottom: 0.5rem;
+}
+
+.tk-not-found-desc {
+  font-size: 0.9rem;
+  color: var(--tk-text-muted);
+  line-height: 1.5;
+  margin-bottom: 1.75rem;
+}

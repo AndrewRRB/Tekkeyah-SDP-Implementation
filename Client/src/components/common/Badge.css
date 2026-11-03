@@ -1,0 +1,87 @@
+.tk-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-weight: 700;
+  border-radius: var(--tk-radius-full);
+  line-height: 1.2;
+  white-space: nowrap;
+  letter-spacing: 0.02em;
+  transition: all var(--tk-transition-fast);
+  user-select: none;
+}
+
+.tk-badge--sm {
+  font-size: 0.74rem;
+  padding: 0.22rem 0.65rem;
+}
+
+.tk-badge--md {
+  font-size: 0.82rem;
+  padding: 0.32rem 0.85rem;
+}
+
+.tk-badge--lg {
+  font-size: 0.92rem;
+  padding: 0.42rem 1.05rem;
+}
+
+.tk-badge__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.tk-badge__icon svg {
+  width: 0.95em;
+  height: 0.95em;
+}
+
+/* Variants with richer contrast */
+.tk-badge--default {
+  background-color: var(--tk-green-100);
+  color: var(--tk-green-950);
+  border: 1px solid var(--tk-green-200);
+}
+
+.tk-badge--primary {
+  background-color: var(--tk-green-800);
+  color: #ffffff;
+}
+
+.tk-badge--dark {
+  background-color: rgba(255, 255, 255, 0.14);
+  color: #e2f5ec;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  backdrop-filter: blur(4px);
+}
+
+.tk-badge--success {
+  background-color: var(--tk-status-success-bg);
+  color: var(--tk-status-success-text);
+  border: 1px solid #bce1c7;
+}
+
+.tk-badge--critical {
+  background-color: var(--tk-status-danger-bg);
+  color: var(--tk-status-danger-text);
+  border: 1px solid #f8bcbc;
+}
+
+.tk-badge--warning {
+  background-color: var(--tk-status-warning-bg);
+  color: var(--tk-status-warning-text);
+  border: 1px solid #f6d8b6;
+}
+
+.tk-badge--info {
+  background-color: var(--tk-status-info-bg);
+  color: var(--tk-status-info-text);
+  border: 1px solid #c2e2f6;
+}
+
+.tk-badge--outline {
+  background-color: transparent;
+  color: var(--tk-green-900);
+  border: 1.5px solid var(--tk-green-600);
+}

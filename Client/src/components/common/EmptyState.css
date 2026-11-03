@@ -1,0 +1,46 @@
+.tk-empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 3rem 1.5rem;
+  background-color: var(--tk-surface-card-subtle);
+  border: 1.5px dashed var(--tk-border-light);
+  border-radius: var(--tk-radius-lg);
+  margin: 1rem 0;
+}
+
+.tk-empty-state__icon-wrap {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background-color: var(--tk-green-100);
+  color: var(--tk-green-700);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 0.85rem;
+}
+
+.tk-empty-state__icon {
+  width: 24px;
+  height: 24px;
+}
+
+.tk-empty-state__title {
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--tk-text-primary);
+  margin-bottom: 0.35rem;
+}
+
+.tk-empty-state__desc {
+  font-size: 0.88rem;
+  color: var(--tk-text-muted);
+  max-width: 360px;
+}
+
+.tk-empty-state__action {
+  margin-top: 1rem;
+}

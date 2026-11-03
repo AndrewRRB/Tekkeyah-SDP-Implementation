@@ -1,0 +1,231 @@
+.tk-navbar-container {
+  width: 100%;
+  background-color: rgba(220, 231, 224, 0.95);
+  backdrop-filter: blur(8px);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  border-bottom: 1px solid var(--tk-border-light);
+}
+
+.tk-navbar {
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 0.9rem 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+}
+
+/* Brand */
+.tk-navbar__brand {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.tk-navbar__logo-icon {
+  width: 38px;
+  height: 38px;
+  border-radius: var(--tk-radius-md);
+  background-color: var(--tk-green-800);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 6px rgba(16, 45, 33, 0.25);
+  flex-shrink: 0;
+}
+
+.tk-navbar__brand-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.tk-navbar__brand-title {
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: var(--tk-green-950);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+.tk-navbar__brand-sub {
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: var(--tk-green-700);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+/* Links */
+.tk-navbar__links {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+
+.tk-navbar__link {
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: var(--tk-text-secondary);
+  transition: color var(--tk-transition-fast);
+  position: relative;
+  padding: 0.35rem 0;
+  white-space: nowrap;
+}
+
+.tk-navbar__link:hover {
+  color: var(--tk-green-950);
+}
+
+.tk-navbar__link--active {
+  color: var(--tk-green-950);
+}
+.tk-navbar__link--active::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  right: 0;
+  height: 2.5px;
+  background-color: var(--tk-green-800);
+  border-radius: var(--tk-radius-full);
+}
+
+/* Actions */
+.tk-navbar__actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-shrink: 0;
+}
+
+.tk-navbar__icon-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--tk-text-secondary);
+  position: relative;
+  transition: all var(--tk-transition-fast);
+  flex-shrink: 0;
+}
+.tk-navbar__icon-btn:hover {
+  background-color: var(--tk-green-100);
+  color: var(--tk-green-950);
+}
+
+.tk-navbar__notif-badge {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 7px;
+  height: 7px;
+  background-color: #ef4444;
+  border-radius: 50%;
+  border: 1.5px solid #fff;
+}
+
+.tk-navbar__auth-link {
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: var(--tk-green-950);
+  padding: 0.5rem 0.75rem;
+  white-space: nowrap;
+}
+.tk-navbar__auth-link:hover {
+  color: var(--tk-green-700);
+}
+
+.tk-navbar__cta-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background-color: var(--tk-green-800);
+  color: #fff;
+  font-size: 0.88rem;
+  font-weight: 700;
+  padding: 0.55rem 1.15rem;
+  border-radius: var(--tk-radius-md);
+  box-shadow: 0 2px 4px rgba(16, 45, 33, 0.2);
+  transition: all var(--tk-transition-fast);
+  white-space: nowrap;
+}
+.tk-navbar__cta-btn:hover {
+  background-color: var(--tk-green-700);
+  transform: translateY(-1px);
+}
+
+/* WhatsApp Badge */
+.tk-navbar__whatsapp-badge {
+  background-color: #d1fae5 !important;
+  color: #065f46 !important;
+  border-color: #a7f3d0 !important;
+  font-weight: 700;
+}
+
+.tk-navbar__status-dot {
+  width: 6px;
+  height: 6px;
+  background-color: #10b981;
+  border-radius: 50%;
+  display: inline-block;
+  margin-right: 0.3rem;
+}
+
+/* Profile Pill */
+.tk-navbar__profile-pill {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.35rem 0.85rem 0.35rem 0.45rem;
+  background-color: var(--tk-surface-card);
+  border: 1px solid var(--tk-border-light);
+  border-radius: var(--tk-radius-full);
+  box-shadow: var(--tk-shadow-xs);
+}
+
+.tk-navbar__avatar {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background-color: var(--tk-green-150);
+  color: var(--tk-green-950);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.tk-navbar__profile-info {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+
+.tk-navbar__profile-name {
+  font-size: 0.82rem;
+  font-weight: 800;
+  color: var(--tk-text-primary);
+  line-height: 1.1;
+  white-space: nowrap;
+}
+
+.tk-navbar__profile-role {
+  font-size: 0.68rem;
+  font-weight: 600;
+  color: var(--tk-text-muted);
+  white-space: nowrap;
+}
+
+@media (max-width: 900px) {
+  .tk-navbar__links {
+    display: none;
+  }
+}

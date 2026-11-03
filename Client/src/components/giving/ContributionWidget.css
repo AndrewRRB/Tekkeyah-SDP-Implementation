@@ -1,0 +1,273 @@
+.tk-donate-card {
+  width: 100%;
+  max-width: 820px;
+  margin: 0 auto;
+}
+
+.tk-donate-form {
+  display: flex;
+  flex-direction: column;
+  gap: 2.25rem;
+}
+
+.tk-donate-section {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.tk-donate-section__label {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: var(--tk-green-950);
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+}
+
+/* Pathway Cards */
+.tk-donate-pathway-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+}
+
+.tk-donate-pathway-card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.75rem;
+  padding: 1.25rem;
+  border: 2px solid var(--tk-border-light);
+  border-radius: var(--tk-radius-lg);
+  background-color: var(--tk-surface-card);
+  cursor: pointer;
+  transition: all var(--tk-transition-fast);
+}
+
+.tk-donate-pathway-card:hover {
+  border-color: var(--tk-green-400);
+}
+
+.tk-donate-pathway-card--active {
+  border-color: var(--tk-green-800);
+  background-color: var(--tk-green-50);
+}
+
+.tk-donate-pathway-card__icon {
+  width: 44px;
+  height: 44px;
+  border-radius: var(--tk-radius-md);
+  background-color: var(--tk-green-100);
+  color: var(--tk-green-800);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.tk-donate-pathway-card--active .tk-donate-pathway-card__icon {
+  background-color: var(--tk-green-800);
+  color: #fff;
+}
+
+.tk-donate-pathway-card__text {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.tk-donate-pathway-card__title {
+  font-size: 1rem;
+  font-weight: 800;
+  color: var(--tk-text-primary);
+  white-space: nowrap;
+}
+
+.tk-donate-pathway-card__desc {
+  font-size: 0.8rem;
+  color: var(--tk-text-muted);
+  line-height: 1.45;
+}
+
+/* Frequency Toggle */
+.tk-donate-freq-toggle {
+  display: inline-flex;
+  padding: 4px;
+  background-color: #d1dfd6;
+  border-radius: var(--tk-radius-full);
+  align-self: flex-start;
+}
+
+.tk-donate-freq-btn {
+  padding: 0.45rem 1.25rem;
+  font-size: 0.86rem;
+  font-weight: 700;
+  color: var(--tk-text-secondary);
+  border-radius: var(--tk-radius-full);
+  transition: all var(--tk-transition-fast);
+  white-space: nowrap;
+}
+
+.tk-donate-freq-btn--active {
+  background-color: var(--tk-surface-card);
+  color: var(--tk-green-950);
+  box-shadow: var(--tk-shadow-xs);
+}
+
+/* Chips */
+.tk-donate-chips {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 0.75rem;
+}
+
+.tk-donate-chip {
+  padding: 0.85rem 0.5rem;
+  text-align: center;
+  font-size: 1rem;
+  font-weight: 800;
+  border: 1.5px solid var(--tk-border-light);
+  border-radius: var(--tk-radius-md);
+  background-color: var(--tk-surface-card);
+  color: var(--tk-text-primary);
+  transition: all var(--tk-transition-fast);
+  white-space: nowrap;
+}
+
+.tk-donate-chip:hover {
+  border-color: var(--tk-green-400);
+}
+
+.tk-donate-chip--active {
+  background-color: var(--tk-green-800);
+  color: #fff;
+  border-color: var(--tk-green-800);
+}
+
+/* Custom Input */
+.tk-donate-custom-input {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.tk-donate-custom-sign {
+  position: absolute;
+  left: 1.1rem;
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: var(--tk-text-muted);
+}
+
+.tk-donate-input {
+  width: 100%;
+  padding: 0.85rem 1rem 0.85rem 2.4rem;
+  border: 1.5px solid var(--tk-green-600);
+  border-radius: var(--tk-radius-md);
+  font-size: 1rem;
+  outline: none;
+}
+
+/* Field */
+.tk-donate-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.tk-donate-field__label {
+  font-size: 0.84rem;
+  font-weight: 700;
+  color: var(--tk-text-primary);
+  white-space: nowrap;
+}
+
+.tk-donate-select {
+  width: 100%;
+  padding: 0.85rem 1rem;
+  border: 1.5px solid var(--tk-border-light);
+  border-radius: var(--tk-radius-md);
+  background-color: var(--tk-surface-card);
+  color: var(--tk-text-primary);
+  font-size: 0.92rem;
+  outline: none;
+  cursor: pointer;
+}
+.tk-donate-select:focus {
+  border-color: var(--tk-green-700);
+}
+
+/* Payments */
+.tk-donate-payments {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.tk-donate-payment-card {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  padding: 1rem 1.25rem;
+  border: 1.5px solid var(--tk-border-light);
+  border-radius: var(--tk-radius-md);
+  background-color: var(--tk-surface-card);
+  cursor: pointer;
+  transition: all var(--tk-transition-fast);
+}
+
+.tk-donate-payment-card:hover {
+  border-color: var(--tk-green-400);
+}
+
+.tk-donate-payment-card--active {
+  border-color: var(--tk-green-800);
+  background-color: var(--tk-green-50);
+}
+
+.tk-donate-payment-card__title {
+  display: block;
+  font-size: 0.92rem;
+  font-weight: 800;
+  color: var(--tk-text-primary);
+  white-space: nowrap;
+}
+
+.tk-donate-payment-card__desc {
+  display: block;
+  font-size: 0.78rem;
+  color: var(--tk-text-muted);
+  white-space: nowrap;
+}
+
+/* Submit */
+.tk-donate-submit-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-top: 0.5rem;
+}
+
+.tk-donate-guarantees {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  font-size: 0.82rem;
+  color: var(--tk-text-muted);
+}
+
+.tk-donate-guarantee {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  white-space: nowrap;
+}
+
+@media (max-width: 768px) {
+  .tk-donate-pathway-cards,
+  .tk-donate-payments,
+  .tk-donate-chips {
+    grid-template-columns: 1fr;
+  }
+}

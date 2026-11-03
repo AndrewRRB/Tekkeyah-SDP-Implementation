@@ -1,0 +1,50 @@
+.tk-card {
+  background-color: var(--tk-surface-card);
+  border-radius: var(--tk-radius-lg);
+  position: relative;
+  transition: all var(--tk-transition-normal);
+}
+
+.tk-card--bordered {
+  border: 1px solid var(--tk-border-card);
+}
+
+/* Paddings */
+.tk-card--padding-none {
+  padding: 0;
+}
+.tk-card--padding-sm {
+  padding: 1rem;
+}
+.tk-card--padding-md {
+  padding: 1.5rem;
+}
+.tk-card--padding-lg {
+  padding: 2rem;
+}
+.tk-card--padding-xl {
+  padding: 2.5rem;
+}
+
+/* Elevations */
+.tk-card--elevation-none {
+  box-shadow: none;
+}
+.tk-card--elevation-xs {
+  box-shadow: var(--tk-shadow-xs);
+}
+.tk-card--elevation-sm {
+  box-shadow: var(--tk-shadow-sm);
+}
+.tk-card--elevation-md {
+  box-shadow: var(--tk-shadow-md);
+}
+.tk-card--elevation-lg {
+  box-shadow: var(--tk-shadow-lg);
+}
+
+.tk-card--hover:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--tk-shadow-md);
+  border-color: var(--tk-green-300);
+}

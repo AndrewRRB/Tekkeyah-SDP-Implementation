@@ -1,0 +1,66 @@
+:root {
+  /* Richer, Grounded Palette (Slightly darker tones, not dark mode) */
+  --tk-green-950: #0b1f16;
+  --tk-green-900: #102d21;
+  --tk-green-850: #143829;
+  --tk-green-800: #1a4533;
+  --tk-green-700: #235842;
+  --tk-green-600: #2d6e53;
+  --tk-green-500: #3a8566;
+  --tk-green-400: #54a382;
+  --tk-green-300: #7ebca2;
+  --tk-green-200: #a7d3c0;
+  --tk-green-150: #c5e3d5;
+  --tk-green-100: #d6e8de;
+  --tk-green-50:  #e7f0ea;
+
+  /* Surfaces & Canvas */
+  --tk-surface-page: #dce7e0;         /* Grounded warm sage background */
+  --tk-surface-card: #ffffff;         /* Crisp clean card surface */
+  --tk-surface-card-subtle: #f4f8f5;  /* Subtle tinted card */
+  --tk-surface-inset: #eef4f0;        /* Inset fields and panels */
+  --tk-surface-dark: #102d21;
+
+  /* Typography */
+  --tk-font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --tk-font-arabic: 'Amiri', 'Traditional Arabic', serif;
+
+  --tk-text-primary: #122219;         /* High-contrast rich charcoal green */
+  --tk-text-secondary: #2f4337;       /* Readable deep moss */
+  --tk-text-muted: #566c60;           /* Soft muted label */
+  --tk-text-inverse: #ffffff;
+  --tk-text-inverse-muted: #a6c5b6;
+
+  /* Borders & Dividers */
+  --tk-border-light: #cddcd2;
+  --tk-border-card: #d4e2d9;
+  --tk-border-dark: rgba(255, 255, 255, 0.15);
+
+  /* Status Colors */
+  --tk-status-success-bg: #d4eedb;
+  --tk-status-success-text: #11572d;
+  --tk-status-warning-bg: #fbedd7;
+  --tk-status-warning-text: #8c4106;
+  --tk-status-danger-bg: #fbd9d9;
+  --tk-status-danger-text: #8b1818;
+  --tk-status-info-bg: #d9ecf8;
+  --tk-status-info-text: #0b547d;
+
+  /* Elevation */
+  --tk-shadow-xs: 0 1px 3px rgba(16, 45, 33, 0.05);
+  --tk-shadow-sm: 0 2px 6px rgba(16, 45, 33, 0.07);
+  --tk-shadow-md: 0 6px 16px rgba(16, 45, 33, 0.09);
+  --tk-shadow-lg: 0 14px 32px rgba(16, 45, 33, 0.11);
+  --tk-shadow-xl: 0 22px 42px rgba(16, 45, 33, 0.14);
+
+  /* Border Radii */
+  --tk-radius-sm: 6px;
+  --tk-radius-md: 10px;
+  --tk-radius-lg: 16px;
+  --tk-radius-xl: 20px;
+  --tk-radius-full: 9999px;
+
+  /* Transitions */
+  --tk-transition-fast: 0.15s ease-in-out;
+  --tk-transition-normal: 0.25s ease-in-out;
+}

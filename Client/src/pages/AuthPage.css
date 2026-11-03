@@ -1,0 +1,25 @@
+.tk-auth-page {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  min-height: 100vh;
+  width: 100%;
+}
+
+.tk-auth-page__hero-side {
+  width: 100%;
+  height: 100%;
+}
+
+.tk-auth-page__form-side {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 2rem;
+  background-color: var(--tk-surface-page);
+}
+
+@media (max-width: 980px) {
+  .tk-auth-page {
+    grid-template-columns: 1fr;
+  }
+}
