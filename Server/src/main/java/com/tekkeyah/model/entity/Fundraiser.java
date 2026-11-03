@@ -17,7 +17,7 @@ public class Fundraiser extends Event{
 
     @Override
     public String getSummary(){
-        return super.getSummary() + " raised " + amountRaised + " of " + fundTarget;
+        return super.getSummary() + " - raised " + amountRaised + " of " + fundTarget;
     }
 
     @Override
