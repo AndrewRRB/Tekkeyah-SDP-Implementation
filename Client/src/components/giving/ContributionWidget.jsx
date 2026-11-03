@@ -15,7 +15,7 @@ export default function ContributionWidget({ userId, onReceiptGenerated }) {
   const [isCustom, setIsCustom] = useState(false);
   const [beneficiary, setBeneficiary] = useState('General Community Relief Fund');
   const [paymentGateway, setPaymentGateway] = useState('CARD'); // 'CARD' | 'CASH'
-  const [card, setCard] = useState({ holderName: '', number: '', expiry: '', cvv: '' });
+  const [card, setCard] = useState({ brand: 'VISA', holderName: '', number: '', expiry: '', cvv: '' });
   const [cardErrors, setCardErrors] = useState({});
   const [submitError, setSubmitError] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -86,7 +86,7 @@ export default function ContributionWidget({ userId, onReceiptGenerated }) {
         });
       }
 
-      if (payingByCard) setCard({ holderName: '', number: '', expiry: '', cvv: '' });
+      if (payingByCard) setCard((prev) => ({ brand: prev.brand, holderName: '', number: '', expiry: '', cvv: '' }));
       onReceiptGenerated?.(receipt);
     } catch (err) {
       setSubmitError(err.message);

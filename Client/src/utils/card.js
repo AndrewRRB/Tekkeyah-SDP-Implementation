@@ -1,38 +1,49 @@
-/** Client-side card checks; the server repeats every one of them. */
+/**
+ * Card rules per brand. The donor picks the brand; the number must be digits
+ * only and have one of that brand's lengths.
+ * Mirrors Server/src/main/java/com/tekkeyah/model/enums/CardBrand.java.
+ */
+export const CARD_BRANDS = {
+  VISA: {
+    label: 'Visa',
+    lengths: [13, 16, 19],
+    cvvLength: 3,
+    groups: [4, 4, 4, 4, 3],
+  },
+  MASTERCARD: {
+    label: 'Mastercard',
+    lengths: [16],
+    cvvLength: 3,
+    groups: [4, 4, 4, 4],
+  },
+  AMEX: {
+    label: 'American Express',
+    lengths: [15],
+    cvvLength: 4,
+    groups: [4, 6, 5],
+  },
+};
 
 const digitsOnly = (value) => value.replace(/\D/g, '');
 
-export const cardBrand = (number) => {
-  const digits = digitsOnly(number);
-  if (/^4/.test(digits)) return 'Visa';
-  if (/^3[47]/.test(digits)) return 'American Express';
-  const first4 = Number(digits.slice(0, 4));
-  if (/^5[1-5]/.test(digits) || (first4 >= 2221 && first4 <= 2720)) return 'Mastercard';
-  return null;
-};
+export const maxCardDigits = (brand) => Math.max(...CARD_BRANDS[brand].lengths);
 
-const passesLuhn = (digits) => {
-  let sum = 0;
-  let doubleIt = false;
-  for (let i = digits.length - 1; i >= 0; i -= 1) {
-    let d = Number(digits[i]);
-    if (doubleIt) {
-      d *= 2;
-      if (d > 9) d -= 9;
-    }
-    sum += d;
-    doubleIt = !doubleIt;
-  }
-  return sum % 10 === 0;
-};
+export const cvvLength = (brand) => CARD_BRANDS[brand].cvvLength;
 
-/** "4242424242424242" -> "4242 4242 4242 4242" (Amex: 4-6-5). */
-export const formatCardNumber = (value) => {
-  const digits = digitsOnly(value).slice(0, 19);
-  if (cardBrand(digits) === 'American Express') {
-    return [digits.slice(0, 4), digits.slice(4, 10), digits.slice(10, 15)].filter(Boolean).join(' ');
+const lengthsText = (lengths) =>
+  lengths.length === 1 ? `${lengths[0]}` : `${lengths.slice(0, -1).join(', ')} or ${lengths.at(-1)}`;
+
+/** Groups digits the way the chosen brand prints them, capped at its max length. */
+export const formatCardNumber = (value, brand) => {
+  const digits = digitsOnly(value).slice(0, maxCardDigits(brand));
+  const parts = [];
+  let index = 0;
+  for (const size of CARD_BRANDS[brand].groups) {
+    if (index >= digits.length) break;
+    parts.push(digits.slice(index, index + size));
+    index += size;
   }
-  return digits.replace(/(\d{4})(?=\d)/g, '$1 ');
+  return parts.join(' ');
 };
 
 /** "1228" -> "12 / 28" */
@@ -41,38 +52,45 @@ export const formatExpiry = (value) => {
   return digits.length > 2 ? `${digits.slice(0, 2)} / ${digits.slice(2)}` : digits;
 };
 
-export const cvvLength = (number) => (cardBrand(number) === 'American Express' ? 4 : 3);
+/** Message for the number field, or null when it is valid for the chosen brand. */
+const numberError = (number, brand) => {
+  const { label, lengths } = CARD_BRANDS[brand];
+  const digits = digitsOnly(number);
+  if (!lengths.includes(digits.length)) {
+    return `${label} numbers have ${lengthsText(lengths)} digits (you entered ${digits.length}).`;
+  }
+  return null;
+};
 
 /** Returns { field: message } for every invalid field; empty object when valid. */
-export const validateCard = ({ holderName, number, expiry, cvv }, today = new Date()) => {
+export const validateCard = ({ brand, holderName, number, expiry, cvv }, today = new Date()) => {
   const errors = {};
   if (holderName.trim().length < 2) errors.holderName = 'Enter the name on the card.';
 
-  const digits = digitsOnly(number);
-  if (digits.length < 13 || digits.length > 19 || !passesLuhn(digits)) {
-    errors.number = 'Card number is not valid.';
-  }
+  const numberMessage = numberError(number, brand);
+  if (numberMessage) errors.number = numberMessage;
 
   const [month, year] = digitsOnly(expiry).match(/^(\d{2})(\d{2})$/)?.slice(1).map(Number) ?? [];
   if (!month || month < 1 || month > 12) {
     errors.expiry = 'Use MM / YY.';
   } else {
-    const endOfExpiryMonth = new Date(2000 + year, month, 1);
-    if (endOfExpiryMonth <= new Date(today.getFullYear(), today.getMonth(), 1)) {
+    const firstDayAfterExpiry = new Date(2000 + year, month, 1);
+    if (firstDayAfterExpiry <= new Date(today.getFullYear(), today.getMonth(), 1)) {
       errors.expiry = 'This card has expired.';
     }
   }
 
-  if (!new RegExp(`^\\d{${cvvLength(number)}}$`).test(cvv)) {
-    errors.cvv = `${cvvLength(number)} digits.`;
+  if (!new RegExp(`^\\d{${cvvLength(brand)}}$`).test(cvv)) {
+    errors.cvv = `${cvvLength(brand)} digits.`;
   }
   return errors;
 };
 
 /** Shape the server expects (CardDetails record). */
-export const toCardPayload = ({ holderName, number, expiry, cvv }) => {
+export const toCardPayload = ({ brand, holderName, number, expiry, cvv }) => {
   const [month, year] = digitsOnly(expiry).match(/^(\d{2})(\d{2})$/).slice(1).map(Number);
   return {
+    brand,
     holderName: holderName.trim(),
     number: digitsOnly(number),
     expiryMonth: month,

@@ -129,3 +129,79 @@
     animation: none;
   }
 }
+
+/* Brand picker */
+.tk-card-fields__brands {
+  border: none;
+  min-width: 0;
+}
+
+.tk-card-fields__brands .tk-card-fields__label {
+  margin-bottom: 0.4rem;
+}
+
+.tk-card-fields__brand-options {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.6rem;
+}
+
+.tk-card-fields__brand-option {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+  min-height: 44px;
+  padding: 0.6rem 0.8rem;
+  border: 1.5px solid var(--tk-border-light);
+  border-radius: var(--tk-radius-md);
+  background-color: var(--tk-surface-card);
+  cursor: pointer;
+  transition: border-color var(--tk-transition-fast), background-color var(--tk-transition-fast),
+    transform 0.12s ease-out;
+}
+
+.tk-card-fields__brand-option:hover {
+  border-color: var(--tk-green-400);
+}
+
+.tk-card-fields__brand-option:active {
+  transform: scale(0.97);
+}
+
+.tk-card-fields__brand-option:has(.tk-card-fields__brand-radio:focus-visible) {
+  outline: 2px solid var(--tk-green-700);
+  outline-offset: 2px;
+}
+
+.tk-card-fields__brand-option--active {
+  border-color: var(--tk-green-800);
+  background-color: var(--tk-green-50);
+}
+
+.tk-card-fields__brand-radio {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.tk-card-fields__brand-name {
+  font-size: 0.86rem;
+  font-weight: 800;
+  color: var(--tk-text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.tk-card-fields__brand-hint {
+  font-size: 0.72rem;
+  color: var(--tk-text-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+@media (max-width: 560px) {
+  .tk-card-fields__brand-options {
+    grid-template-columns: 1fr;
+  }
+}

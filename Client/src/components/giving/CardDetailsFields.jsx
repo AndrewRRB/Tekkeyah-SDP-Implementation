@@ -1,14 +1,24 @@
 import { CreditCard, Lock, User } from 'lucide-react';
-import { cardBrand, cvvLength, formatCardNumber, formatExpiry } from '../../utils/card';
+import { CARD_BRANDS, cvvLength, formatCardNumber, formatExpiry } from '../../utils/card';
 import './CardDetailsFields.css';
 
 /**
  * Card number / name / expiry / CVV for a CARD donation.
- * value: { holderName, number, expiry, cvv } (display strings), errors: { field: message }
+ * value: { brand, holderName, number, expiry, cvv } (display strings), errors: { field: message }
+ * brand is 'VISA' | 'MASTERCARD' | 'AMEX' and drives the number length, grouping and CVV length.
  */
 export default function CardDetailsFields({ value, onChange, errors = {} }) {
-  const brand = cardBrand(value.number);
+  const { brand } = value;
   const set = (field, next) => onChange({ ...value, [field]: next });
+
+  // Re-format what was typed for the new brand; the CVV length may change too
+  const chooseBrand = (next) =>
+    onChange({
+      ...value,
+      brand: next,
+      number: formatCardNumber(value.number, next),
+      cvv: value.cvv.slice(0, cvvLength(next)),
+    });
 
   const fieldError = (field) =>
     errors[field] && (
@@ -21,6 +31,29 @@ export default function CardDetailsFields({ value, onChange, errors = {} }) {
 
   return (
     <div className="tk-card-fields">
+      <fieldset className="tk-card-fields__row tk-card-fields__row--full tk-card-fields__brands">
+        <legend className="tk-card-fields__label">Card Type</legend>
+        <div className="tk-card-fields__brand-options">
+          {Object.entries(CARD_BRANDS).map(([key, { label, lengths }]) => (
+            <label
+              key={key}
+              className={`tk-card-fields__brand-option ${brand === key ? 'tk-card-fields__brand-option--active' : ''}`}
+            >
+              <input
+                type="radio"
+                name="card-brand"
+                value={key}
+                checked={brand === key}
+                onChange={() => chooseBrand(key)}
+                className="tk-card-fields__brand-radio"
+              />
+              <span className="tk-card-fields__brand-name">{label}</span>
+              <span className="tk-card-fields__brand-hint">{lengths.join(' / ')} digits</span>
+            </label>
+          ))}
+        </div>
+      </fieldset>
+
       <div className="tk-card-fields__row tk-card-fields__row--full">
         <label className="tk-card-fields__label" htmlFor="card-number">
           Card Number
@@ -32,14 +65,13 @@ export default function CardDetailsFields({ value, onChange, errors = {} }) {
             type="text"
             inputMode="numeric"
             autoComplete="cc-number"
-            placeholder="1234 5678 9012 3456"
+            placeholder={formatCardNumber('0'.repeat(Math.max(...CARD_BRANDS[brand].lengths)), brand).replace(/0/g, '•')}
             value={value.number}
-            onChange={(e) => set('number', formatCardNumber(e.target.value))}
+            onChange={(e) => set('number', formatCardNumber(e.target.value, brand))}
             aria-invalid={Boolean(errors.number)}
             aria-describedby={describedBy('number')}
             className="tk-card-fields__input tk-card-fields__input--mono"
           />
-          {brand && <span className="tk-card-fields__brand">{brand}</span>}
         </div>
         {fieldError('number')}
       </div>
@@ -97,8 +129,8 @@ export default function CardDetailsFields({ value, onChange, errors = {} }) {
             type="password"
             inputMode="numeric"
             autoComplete="cc-csc"
-            placeholder={'•'.repeat(cvvLength(value.number))}
-            maxLength={cvvLength(value.number)}
+            placeholder={'•'.repeat(cvvLength(brand))}
+            maxLength={cvvLength(brand)}
             value={value.cvv}
             onChange={(e) => set('cvv', e.target.value.replace(/\D/g, ''))}
             aria-invalid={Boolean(errors.cvv)}
