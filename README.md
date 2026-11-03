@@ -106,12 +106,12 @@ Tekkeyah-SDP-Implementation/
 
 | Pattern | Architectural Role in Tekkeyah | Concrete Classes & Interfaces |
 | :--- | :--- | :--- |
-| **Factory Method** | Encapsulates the instantiation of different charitable events and donation products. | `EventCreator` (Creator) $\rightarrow$ `FundraiserCreator`, `OutreachCreator`<br>`Event` (Product) $\rightarrow$ `FundraiserEvent`, `OutreachEvent` |
-| **Strategy (Payment)** | Enables dynamic runtime selection of payment processing algorithms. | `PaymentStrategy` (Strategy) $\rightarrow$ `CardPayment`, `CashPayment`<br>`PaymentService` (Context) |
-| **Strategy (Notification)** | Allows donors and volunteers to configure preferred real-time notification channels. | `NotificationStrategy` (Strategy) $\rightarrow$ `EmailNotification`, `SMSNotification`, `WhatsAppNotification` |
-| **Observer** | Dispatches real-time state changes (e.g. donation verification, event milestones) to registered user observers. | `Subject` $\rightarrow$ `Donation`, `Event`<br>`Observer` $\rightarrow$ `User` (`Donor`, `Volunteer`, `Beneficiary`) |
-| **Decorator** | Dynamically attaches special skills, privileges, and responsibilities to volunteers at runtime. | `VolunteerRole` (Component) $\rightarrow$ `BasicVolunteerRole`<br>`VolunteerRoleDecorator` $\rightarrow$ `DriverRole`, `CookRole` |
-| **Singleton** | Ensures a single shared connection instance for low-level database operations. | `DatabaseConnection` |
+| **Observer** | Notifies users and entities upon state changes (e.g. event status updates, donation receipts, payment status). | `Subject`, `Observer`, `EventCreator` (`Fundraiser`, `Outreach`), `Donation`, `Payment`, `User` (`Volunteer`, `Donor`, `Beneficiary`, `Admin`). |
+| **Strategy (Notification)** | Allows users to dynamically select their preferred notification channel. | `NotificationStrategy`, `EmailNotification`, `SMSNotification`, `WhatsAppNotification`. |
+| **Strategy (Payment)** | Supports interchangeable payment methods for ticket purchases and donations. | `PaymentStrategy`, `CardPayment`, `CashPayment`. |
+| **Decorator** | Dynamically attaches additional responsibilities and permissions to volunteer roles. | `VolunteerRole` (Component), `BasicVolunteerRole` (Concrete Component), `VolunteerRoleDecorator` (Decorator), `DriverRole`, `CookRole` (Concrete Decorators). |
+| **Factory Method** | Encapsulates the instantiation and configuration of specialized event types. | `EventCreator` (Creator), `FundraiserCreator`, `OutreachCreator` (Concrete Creators), `EventCreator` (Product). |
+| **Singleton** | Ensures a single shared instance for direct database operations. | `DatabaseConnection`. |
 
 ---
 
