@@ -1,6 +1,6 @@
 package com.tekkeyah.pattern.strategy;
 
-import com.tekkeyah.model.entities.User;
+import com.tekkeyah.model.entity.User;
 import org.springframework.stereotype.Component;
 
 @Component("socialMediaNotification")

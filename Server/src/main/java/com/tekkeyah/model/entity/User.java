@@ -1,4 +1,4 @@
-package com.tekkeyah.model.entities;
+package com.tekkeyah.model.entity;
 
 import com.tekkeyah.pattern.observer.Observer;
 import com.tekkeyah.pattern.observer.Subject;

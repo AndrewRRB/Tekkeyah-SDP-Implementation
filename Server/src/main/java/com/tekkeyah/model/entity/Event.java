@@ -3,8 +3,16 @@ package com.tekkeyah.model.entity;
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.List;
+import com.tekkeyah.pattern.observer.Observer;
 
+@Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 public abstract class Event{
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+
     protected int eventID;
     protected String title;
     protected String description;
@@ -14,6 +22,9 @@ public abstract class Event{
 
     @ManyToMany
     protected List<User> attendees = new ArrayList<>();
+
+    @Transient
+    private List<Observer> observers = new ArrayList<>();
 
     @Enumerated(EnumType.STRING)
     protected EventStatus status = EventStatus.SCHEDULED;
@@ -26,7 +37,7 @@ public abstract class Event{
         return eventID;
     }
 
-    public String getTile(){
+    public String getTitle(){
         return title;
     }
 
@@ -38,7 +49,7 @@ public abstract class Event{
         return description;
     }
 
-    public void setDescription(){
+    public void setDescription(String description){
         this.description = description;
     }
 
@@ -46,7 +57,7 @@ public abstract class Event{
         return startDateTime;
     }
 
-    public void setStartDateTime(){
+    public void setStartDateTime(LocalDateTime startDateTime){
         this.startDateTime = startDateTime;
     }
 
@@ -54,7 +65,7 @@ public abstract class Event{
         return endDateTime;
     }
 
-    public void setEndDateTime(){
+    public void setEndDateTime(LocalDateTime endDateTime){
         this.endDateTime = endDateTime;
     }
 
@@ -62,7 +73,7 @@ public abstract class Event{
         return capacity;
     }
 
-    public void setCapacity(){
+    public void setCapacity(int capacity){
         this.capacity = capacity;
     }
 
@@ -70,7 +81,7 @@ public abstract class Event{
         return status;
     }
 
-    public void setStatus(){
+    public void setStatus(EventStatus status){
         this.status = status;
     }
 
