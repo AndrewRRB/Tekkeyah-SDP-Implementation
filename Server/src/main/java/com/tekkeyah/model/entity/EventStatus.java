@@ -1,5 +1,5 @@
 package com.tekkeyah.model.entity;
 
 public enum EventStatus {
-    SCHEDULED, ONGOING, COMPLETED, CANCELLED
+    SCHEDULED, ON_GOING, COMPLETED, CANCELLED
 }

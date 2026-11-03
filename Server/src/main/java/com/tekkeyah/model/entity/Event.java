@@ -1,19 +1,20 @@
 package com.tekkeyah.model.entity;
+import com.tekkeyah.model.entity.EventStatus;
 
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import com.tekkeyah.pattern.observer.Observer;
-import com.tekkeyah.pattern.observer.Subject;
+import java.util.Observable;
+import java.util.Observer;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
-public abstract class Event implements Subject{
+@SuppressWarnings("deprecation")
+public abstract class Event extends Observable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-
     protected int eventID;
     protected String title;
     protected String description;
@@ -24,16 +25,12 @@ public abstract class Event implements Subject{
     @ManyToMany
     protected List<User> attendees = new ArrayList<>();
 
-    @Transient
-    private List<Observer> observers = new ArrayList<>();
-
     @Enumerated(EnumType.STRING)
     protected EventStatus status = EventStatus.SCHEDULED;
 
     public Event(){}
 
-
-    //methods
+    // Methods
     public int getAvailableSeats(){
         return capacity - attendees.size();
     }
@@ -62,31 +59,22 @@ public abstract class Event implements Subject{
         return "Reminder: " + title + " starts at " + startDateTime;
     }
 
-
-
-
-    //observer pattern
-    @Override
+    // Java's built-in Observer
     public void attach(Observer o) {
-        if (!observers.contains(o)) {
-            observers.add(o);
-        }
+        this.addObserver(o);
     }
 
-    @Override
     public void detach(Observer o) {
-        observers.remove(o);
+        this.deleteObserver(o);
     }
 
     @Override
-    public void notifyObservers(String msg) {
-        for (Observer o : new ArrayList<>(observers)) {
-            o.update(this, msg);
-        }
+    public void notifyObservers(Object msg) {
+        setChanged();
+        super.notifyObservers(msg);
     }
 
-
-    //setters and getters
+    // Setters and Getters
     public int getEventID(){
         return eventID;
     }
