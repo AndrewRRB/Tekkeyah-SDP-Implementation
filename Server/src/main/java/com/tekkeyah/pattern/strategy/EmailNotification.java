@@ -1,7 +1,7 @@
 package com.tekkeyah.pattern.strategy;
-
-import com.tekkeyah.model.entities.User;
 import org.springframework.stereotype.Component;
+
+import com.tekkeyah.model.entity.User;
 
 @Component("emailNotification")
 public class EmailNotification implements NotificationStrategy {
