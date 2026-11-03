@@ -1,0 +1,120 @@
+.tk-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  font-family: inherit;
+  font-weight: 700;
+  border-radius: var(--tk-radius-md);
+  transition: all var(--tk-transition-fast);
+  cursor: pointer;
+  text-align: center;
+  user-select: none;
+  white-space: nowrap;
+}
+
+.tk-button--full {
+  width: 100%;
+}
+
+.tk-button:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+  transform: none !important;
+}
+
+/* Sizes */
+.tk-button--sm {
+  font-size: 0.82rem;
+  padding: 0.45rem 0.95rem;
+  border-radius: var(--tk-radius-sm);
+}
+
+.tk-button--md {
+  font-size: 0.92rem;
+  padding: 0.65rem 1.35rem;
+}
+
+.tk-button--lg {
+  font-size: 1.02rem;
+  padding: 0.85rem 1.75rem;
+  border-radius: var(--tk-radius-md);
+}
+
+/* Variants */
+.tk-button--primary {
+  background-color: var(--tk-green-800);
+  color: #ffffff;
+  box-shadow: 0 2px 6px rgba(16, 45, 33, 0.25);
+}
+.tk-button--primary:hover:not(:disabled) {
+  background-color: var(--tk-green-700);
+  box-shadow: 0 4px 10px rgba(16, 45, 33, 0.3);
+  transform: translateY(-1px);
+}
+.tk-button--primary:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.tk-button--secondary {
+  background-color: var(--tk-green-100);
+  color: var(--tk-green-950);
+  border: 1px solid var(--tk-green-200);
+}
+.tk-button--secondary:hover:not(:disabled) {
+  background-color: var(--tk-green-150);
+  border-color: var(--tk-green-300);
+}
+
+.tk-button--outline {
+  background-color: transparent;
+  color: var(--tk-green-800);
+  border: 1.5px solid var(--tk-green-800);
+}
+.tk-button--outline:hover:not(:disabled) {
+  background-color: var(--tk-green-50);
+}
+
+.tk-button--light {
+  background-color: var(--tk-surface-card);
+  color: var(--tk-text-primary);
+  border: 1px solid var(--tk-border-light);
+  box-shadow: var(--tk-shadow-xs);
+}
+.tk-button--light:hover:not(:disabled) {
+  background-color: var(--tk-surface-inset);
+  border-color: var(--tk-green-400);
+}
+
+.tk-button--ghost {
+  background: transparent;
+  color: var(--tk-text-secondary);
+}
+.tk-button--ghost:hover:not(:disabled) {
+  background-color: rgba(0, 0, 0, 0.05);
+  color: var(--tk-text-primary);
+}
+
+.tk-button__icon {
+  display: inline-flex;
+  align-items: center;
+}
+.tk-button__icon svg {
+  width: 1.1em;
+  height: 1.1em;
+}
+
+.tk-button__spinner {
+  width: 1.1em;
+  height: 1.1em;
+  border: 2px solid currentColor;
+  border-right-color: transparent;
+  border-radius: 50%;
+  animation: tk-spin 0.65s linear infinite;
+}
+
+@keyframes tk-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

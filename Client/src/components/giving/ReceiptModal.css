@@ -1,0 +1,100 @@
+.tk-receipt-modal {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.tk-receipt-modal__status-banner {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  padding: 1rem 1.25rem;
+  background-color: var(--tk-green-50);
+  border: 1px solid var(--tk-green-200);
+  border-radius: var(--tk-radius-md);
+}
+
+.tk-receipt-modal__icon {
+  color: var(--tk-green-700);
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.tk-receipt-modal__status-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.tk-receipt-modal__status-title {
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: var(--tk-green-950);
+  white-space: nowrap;
+}
+
+.tk-receipt-modal__status-sub {
+  font-size: 0.78rem;
+  color: var(--tk-green-700);
+  white-space: nowrap;
+}
+
+/* Table */
+.tk-receipt-modal__table {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--tk-border-light);
+  border-radius: var(--tk-radius-md);
+  overflow: hidden;
+}
+
+.tk-receipt-modal__row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.8rem 1.1rem;
+  border-bottom: 1px solid var(--tk-border-light);
+  font-size: 0.86rem;
+  gap: 1rem;
+}
+.tk-receipt-modal__row:last-child {
+  border-bottom: none;
+}
+
+.tk-receipt-modal__row--highlight {
+  background-color: var(--tk-surface-card-subtle);
+}
+
+.tk-receipt-modal__label {
+  color: var(--tk-text-muted);
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.tk-receipt-modal__value {
+  color: var(--tk-text-primary);
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.tk-receipt-modal__value--mono {
+  font-family: monospace;
+  font-weight: 700;
+  color: var(--tk-green-900);
+  white-space: nowrap;
+}
+
+.tk-receipt-modal__val-highlight {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: var(--tk-green-950);
+  white-space: nowrap;
+}
+
+/* Actions */
+.tk-receipt-modal__actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.75rem;
+}

@@ -1,0 +1,71 @@
+.tk-footer-container {
+  width: 100%;
+  background-color: var(--tk-surface-page);
+  border-top: 1px solid var(--tk-border-light);
+  padding: 2.75rem 1.5rem;
+  margin-top: auto;
+}
+
+.tk-footer {
+  max-width: 1240px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+}
+
+.tk-footer__brand-block {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.tk-footer__brand-name {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: var(--tk-green-950);
+  white-space: nowrap;
+}
+
+.tk-footer__brand-ar {
+  font-family: var(--tk-font-arabic);
+  font-size: 1rem;
+  color: var(--tk-green-700);
+}
+
+.tk-footer__copy {
+  font-size: 0.82rem;
+  color: var(--tk-text-muted);
+}
+
+.tk-footer__links {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+}
+
+.tk-footer__link {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--tk-text-muted);
+  transition: color var(--tk-transition-fast);
+  white-space: nowrap;
+}
+
+.tk-footer__link:hover {
+  color: var(--tk-green-950);
+  text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+  .tk-footer {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

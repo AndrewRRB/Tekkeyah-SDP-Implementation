@@ -1,0 +1,164 @@
+.tk-action-cards-section {
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 1rem 1.5rem 3.5rem;
+}
+
+.tk-action-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+}
+
+.tk-action-card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.tk-action-card__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.25rem;
+}
+
+.tk-action-card__icon-box {
+  width: 42px;
+  height: 42px;
+  border-radius: var(--tk-radius-md);
+  background-color: var(--tk-green-100);
+  color: var(--tk-green-800);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.tk-action-card__title {
+  font-size: 1.28rem;
+  font-weight: 800;
+  color: var(--tk-text-primary);
+  margin-bottom: 0.6rem;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+}
+
+.tk-action-card__desc {
+  font-size: 0.88rem;
+  color: var(--tk-text-muted);
+  line-height: 1.55;
+  margin-bottom: 1.5rem;
+  flex-grow: 1;
+}
+
+/* Amount selector */
+.tk-action-card__amount-selector {
+  margin-bottom: 1.5rem;
+}
+
+.tk-action-card__sublabel {
+  display: block;
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  color: var(--tk-text-secondary);
+  margin-bottom: 0.6rem;
+  white-space: nowrap;
+}
+
+.tk-action-card__chips {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.5rem;
+}
+
+.tk-action-card__chip {
+  padding: 0.55rem 0;
+  text-align: center;
+  font-size: 0.9rem;
+  font-weight: 800;
+  border: 1.5px solid var(--tk-border-light);
+  border-radius: var(--tk-radius-md);
+  background-color: var(--tk-surface-card);
+  color: var(--tk-text-primary);
+  transition: all var(--tk-transition-fast);
+  white-space: nowrap;
+}
+
+.tk-action-card__chip:hover {
+  border-color: var(--tk-green-500);
+}
+
+.tk-action-card__chip--active {
+  background-color: var(--tk-green-800);
+  color: #fff;
+  border-color: var(--tk-green-800);
+}
+
+/* Shifts list */
+.tk-action-card__shifts-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.tk-action-card__shift-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.65rem 0.85rem;
+  background-color: var(--tk-surface-inset);
+  border-radius: var(--tk-radius-md);
+  border: 1px solid var(--tk-border-light);
+  font-size: 0.84rem;
+}
+
+.tk-action-card__shift-role {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  font-weight: 700;
+  color: var(--tk-text-primary);
+  white-space: nowrap;
+}
+
+.tk-action-card__shift-count {
+  font-size: 0.74rem;
+  font-weight: 800;
+  color: var(--tk-green-800);
+  background-color: var(--tk-green-100);
+  padding: 0.2rem 0.55rem;
+  border-radius: var(--tk-radius-full);
+  white-space: nowrap;
+}
+
+/* Bullets */
+.tk-action-card__bullets {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  margin-bottom: 1.5rem;
+}
+
+.tk-action-card__bullet {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.65rem;
+  font-size: 0.84rem;
+  color: var(--tk-text-secondary);
+  line-height: 1.5;
+}
+
+.tk-action-card__bullet-icon {
+  color: var(--tk-green-600);
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+@media (max-width: 960px) {
+  .tk-action-cards-grid {
+    grid-template-columns: 1fr;
+  }
+}

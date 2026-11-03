@@ -1,0 +1,66 @@
+.tk-hero {
+  text-align: center;
+  padding: 4.5rem 1.5rem 3rem;
+  max-width: 920px;
+  margin: 0 auto;
+}
+
+.tk-hero__badge-wrap {
+  display: inline-flex;
+  margin-bottom: 1.75rem;
+}
+
+.tk-hero__badge-dot {
+  width: 7px;
+  height: 7px;
+  background-color: var(--tk-green-600);
+  border-radius: 50%;
+  display: inline-block;
+  margin-right: 0.35rem;
+}
+
+.tk-hero__badge-sep {
+  opacity: 0.5;
+  margin: 0 0.4rem;
+}
+
+.tk-hero__badge-ar {
+  font-family: var(--tk-font-arabic);
+  font-weight: 700;
+}
+
+.tk-hero__headline {
+  font-size: 3.25rem;
+  font-weight: 800;
+  line-height: 1.2;
+  color: var(--tk-green-950);
+  letter-spacing: -0.03em;
+  margin-bottom: 1.5rem;
+}
+
+.tk-hero__highlight {
+  color: var(--tk-green-800);
+  text-decoration: underline;
+  text-decoration-color: var(--tk-green-400);
+  text-underline-offset: 8px;
+}
+
+.tk-hero__subheadline {
+  font-size: 1.12rem;
+  color: var(--tk-text-secondary);
+  line-height: 1.65;
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+@media (max-width: 768px) {
+  .tk-hero {
+    padding: 3rem 1.25rem 2rem;
+  }
+  .tk-hero__headline {
+    font-size: 2.2rem;
+  }
+  .tk-hero__subheadline {
+    font-size: 0.98rem;
+  }
+}

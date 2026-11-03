@@ -1,0 +1,140 @@
+.tk-charter-section {
+  width: 100%;
+  padding: 4.5rem 1.5rem;
+}
+
+.tk-charter-container {
+  max-width: 1240px;
+  margin: 0 auto;
+}
+
+.tk-charter-layout {
+  display: grid;
+  grid-template-columns: 1.15fr 1fr;
+  gap: 3rem;
+  align-items: center;
+}
+
+/* Manifesto */
+.tk-charter-manifesto {
+  display: flex;
+  flex-direction: column;
+}
+
+.tk-charter-tag {
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  color: var(--tk-green-700);
+  margin-bottom: 1.25rem;
+  white-space: nowrap;
+}
+
+.tk-charter-quote {
+  font-size: 1.95rem;
+  font-weight: 700;
+  color: var(--tk-green-950);
+  line-height: 1.4;
+  letter-spacing: -0.02em;
+  margin-bottom: 1.75rem;
+}
+
+.tk-charter-quote mark {
+  background: none;
+  font-style: italic;
+  color: var(--tk-green-800);
+  text-decoration: underline;
+  text-decoration-color: var(--tk-green-400);
+  text-underline-offset: 4px;
+}
+
+.tk-charter-standard {
+  margin-bottom: 0.5rem;
+}
+
+.tk-charter-standard-ar {
+  font-family: var(--tk-font-arabic);
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--tk-green-800);
+  margin-right: 0.5rem;
+}
+
+.tk-charter-standard-en {
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: var(--tk-text-secondary);
+}
+
+.tk-charter-standard-note {
+  font-size: 0.85rem;
+  color: var(--tk-text-muted);
+  margin-top: 0.35rem;
+}
+
+/* 4 Pillars */
+.tk-charter-pillars {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.25rem;
+}
+
+.tk-charter-pillar {
+  display: flex;
+  flex-direction: column;
+}
+
+.tk-charter-pillar__icon {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--tk-radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 0.85rem;
+  flex-shrink: 0;
+}
+
+.tk-charter-pillar__icon--green {
+  background-color: var(--tk-green-100);
+  color: var(--tk-green-800);
+}
+.tk-charter-pillar__icon--teal {
+  background-color: #d1fae5;
+  color: #065f46;
+}
+.tk-charter-pillar__icon--sage {
+  background-color: #e5ede7;
+  color: #1f3b2e;
+}
+.tk-charter-pillar__icon--mint {
+  background-color: #ecfdf5;
+  color: #047857;
+}
+
+.tk-charter-pillar__title {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: var(--tk-text-primary);
+  margin-bottom: 0.4rem;
+  white-space: nowrap;
+}
+
+.tk-charter-pillar__desc {
+  font-size: 0.84rem;
+  color: var(--tk-text-muted);
+  line-height: 1.5;
+}
+
+@media (max-width: 900px) {
+  .tk-charter-layout {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+}
+
+@media (max-width: 500px) {
+  .tk-charter-pillars {
+    grid-template-columns: 1fr;
+  }
+}

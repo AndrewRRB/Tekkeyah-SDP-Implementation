@@ -1,0 +1,215 @@
+.tk-auth-card {
+  background-color: var(--tk-surface-card);
+  border-radius: var(--tk-radius-xl);
+  padding: 2.75rem 2.5rem;
+  box-shadow: var(--tk-shadow-lg);
+  border: 1px solid var(--tk-border-card);
+  width: 100%;
+  max-width: 480px;
+}
+
+/* Header & Toggle */
+.tk-auth-card__top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1.25rem;
+  margin-bottom: 2rem;
+}
+
+.tk-auth-card__titles {
+  flex: 1;
+}
+
+.tk-auth-card__title {
+  font-size: 1.55rem;
+  font-weight: 800;
+  color: var(--tk-text-primary);
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  margin-bottom: 0.35rem;
+  white-space: nowrap;
+}
+
+.tk-auth-card__subtitle {
+  font-size: 0.85rem;
+  color: var(--tk-text-muted);
+  line-height: 1.45;
+}
+
+.tk-auth-card__toggle-pills {
+  display: inline-flex;
+  padding: 3px;
+  background-color: #dbe7df;
+  border-radius: var(--tk-radius-full);
+  flex-shrink: 0;
+}
+
+.tk-auth-card__toggle-pill {
+  padding: 0.4rem 0.9rem;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--tk-text-secondary);
+  border-radius: var(--tk-radius-full);
+  transition: all var(--tk-transition-fast);
+  white-space: nowrap;
+}
+
+.tk-auth-card__toggle-pill--active {
+  background-color: var(--tk-surface-card);
+  color: var(--tk-green-900);
+  box-shadow: var(--tk-shadow-xs);
+}
+
+/* Alert */
+.tk-auth-card__alert {
+  padding: 0.75rem 1rem;
+  border-radius: var(--tk-radius-md);
+  font-size: 0.85rem;
+  margin-bottom: 1.25rem;
+  background-color: var(--tk-status-danger-bg);
+  color: var(--tk-status-danger-text);
+  border: 1px solid #fecaca;
+}
+
+/* Form */
+.tk-auth-card__form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.tk-auth-card__field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.tk-auth-card__label-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.tk-auth-card__label {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--tk-text-primary);
+  white-space: nowrap;
+}
+
+.tk-auth-card__link {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--tk-green-800);
+  white-space: nowrap;
+}
+.tk-auth-card__link:hover {
+  text-decoration: underline;
+}
+
+.tk-auth-card__input-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.tk-auth-card__input-icon {
+  position: absolute;
+  left: 0.9rem;
+  color: var(--tk-text-muted);
+  pointer-events: none;
+}
+
+.tk-auth-card__input,
+.tk-auth-card__select {
+  width: 100%;
+  padding: 0.8rem 1rem 0.8rem 2.5rem;
+  border: 1.5px solid var(--tk-border-light);
+  border-radius: var(--tk-radius-md);
+  background-color: var(--tk-surface-card);
+  color: var(--tk-text-primary);
+  font-size: 0.92rem;
+  transition: all var(--tk-transition-fast);
+  outline: none;
+}
+
+.tk-auth-card__select {
+  padding-left: 0.9rem;
+  cursor: pointer;
+}
+
+.tk-auth-card__input:focus,
+.tk-auth-card__select:focus {
+  border-color: var(--tk-green-700);
+  box-shadow: 0 0 0 3px rgba(35, 88, 66, 0.15);
+}
+
+.tk-auth-card__eye-btn {
+  position: absolute;
+  right: 0.75rem;
+  padding: 0.25rem;
+  color: var(--tk-text-muted);
+  display: flex;
+  align-items: center;
+}
+.tk-auth-card__eye-btn:hover {
+  color: var(--tk-text-primary);
+}
+
+.tk-auth-card__checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 0.82rem;
+  color: var(--tk-text-secondary);
+  cursor: pointer;
+  user-select: none;
+  white-space: nowrap;
+}
+
+.tk-auth-card__checkbox {
+  accent-color: var(--tk-green-800);
+  width: 16px;
+  height: 16px;
+  border-radius: 4px;
+}
+
+/* Footer */
+.tk-auth-card__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 1.5rem;
+  margin-top: 0.5rem;
+  border-top: 1px solid var(--tk-border-light);
+  font-size: 0.8rem;
+  color: var(--tk-text-muted);
+}
+
+.tk-auth-card__footer-tag {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: var(--tk-green-800);
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.tk-auth-card__footer-link {
+  color: var(--tk-text-secondary);
+  font-weight: 600;
+  white-space: nowrap;
+}
+.tk-auth-card__footer-link:hover {
+  color: var(--tk-green-800);
+}
+
+@media (max-width: 500px) {
+  .tk-auth-card {
+    padding: 1.75rem 1.25rem;
+  }
+  .tk-auth-card__top {
+    flex-direction: column;
+  }
+}
