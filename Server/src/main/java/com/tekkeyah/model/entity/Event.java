@@ -5,10 +5,11 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import com.tekkeyah.pattern.observer.Observer;
+import com.tekkeyah.pattern.observer.Subject;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
-public abstract class Event{
+public abstract class Event implements Subject{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,10 +30,63 @@ public abstract class Event{
     @Enumerated(EnumType.STRING)
     protected EventStatus status = EventStatus.SCHEDULED;
 
-    public Event(){
+    public Event(){}
 
+
+    //methods
+    public int getAvailableSeats(){
+        return capacity - attendees.size();
     }
 
+    public void changeStatus(EventStatus newStatus){
+        this.status = newStatus;
+        notifyObservers("Event " + title + " is now " + newStatus);
+    }
+
+    public void recordAttendance(User attendee) {
+        if (getAvailableSeats() <= 0) {
+            throw new IllegalStateException("Event is full");
+        }
+        if (!attendees.contains(attendee)) {
+            attendees.add(attendee);
+        }
+    }
+
+    public abstract String getEventType();
+
+    public String getSummary() {
+        return getEventType() + ": " + title + " (" + status + ")";
+    }
+
+    public String getReminderMessage() {
+        return "Reminder: " + title + " starts at " + startDateTime;
+    }
+
+
+
+
+    //observer pattern
+    @Override
+    public void attach(Observer o) {
+        if (!observers.contains(o)) {
+            observers.add(o);
+        }
+    }
+
+    @Override
+    public void detach(Observer o) {
+        observers.remove(o);
+    }
+
+    @Override
+    public void notifyObservers(String msg) {
+        for (Observer o : new ArrayList<>(observers)) {
+            o.update(this, msg);
+        }
+    }
+
+
+    //setters and getters
     public int getEventID(){
         return eventID;
     }

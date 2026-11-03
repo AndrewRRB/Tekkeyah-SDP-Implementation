@@ -14,6 +14,26 @@ public class Outreach extends Event{
 
     public Outreach() { }
 
+
+    //methods
+    @Override
+    public String getEventType() { return "Outreach"; }
+
+    @Override
+    public String getSummary() {
+        return super.getSummary() + " - community: " + targetCommunity;
+    }
+
+    @Override
+    public String getReminderMessage() {
+        return "Outreach reminder: " + title + " for " + targetCommunity
+                + " starts at " + startDateTime;
+    }
+
+    public void addPartner(String name) {
+        partnerList.add(name);
+    }
+
     public String getTargetCommunity() {
         return targetCommunity;
     }

@@ -17,6 +17,27 @@ public class Workshop extends Event {
 
     public Workshop() { }
 
+
+    //methods
+    @Override
+    public String getEventType() {
+        return "Workshop";
+    }
+
+    @Override
+    public String getSummary() {
+        return super.getSummary() + " topic: " + topic + ", by " + instructor;
+    }
+
+    @Override
+    public String getReminderMessage() {
+        return "Workshop reminder: " + topic + " with " + instructor
+                + " starts at " + startDateTime;
+    }
+
+
+
+    //setters and getters
     public String getTopic() {
         return topic;
     }
