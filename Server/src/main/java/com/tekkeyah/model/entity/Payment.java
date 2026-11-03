@@ -1,17 +1,15 @@
 package com.tekkeyah.model.entity;
 
-import com.tekkeyah.pattern.observer.Observer;
-import com.tekkeyah.pattern.observer.Subject;
 import com.tekkeyah.pattern.strategy.PaymentStrategy;
 import jakarta.persistence.*;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
+import java.time.LocalDateTime;g
+import java.util.Observable;
+import java.util.Observer;
 
 @Entity
 @Table(name = "payments")
 @Inheritance(strategy = InheritanceType.JOINED)
-public abstract class Payment implements Subject {
+public abstract class Payment extends Observable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,9 +29,6 @@ public abstract class Payment implements Subject {
     @Transient
     protected PaymentStrategy method;
 
-    @Transient
-    private List<Observer> observers = new ArrayList<>();
-
     public Payment() {
         this.timestamp = LocalDateTime.now();
     }
@@ -50,6 +45,7 @@ public abstract class Payment implements Subject {
         }
         boolean ok = method.pay(amount);
         status = ok ? PaymentStatus.COMPLETED : PaymentStatus.FAILED;
+        setChanged();
         notifyObservers("Payment " + status);
         return ok;
     }
@@ -61,28 +57,23 @@ public abstract class Payment implements Subject {
         boolean ok = method.refund(amount);
         if (ok) {
             status = PaymentStatus.REFUNDED;
+            setChanged();
             notifyObservers("Payment " + status);
         }
         return ok;
     }
 
-    @Override
     public void attach(Observer o) {
-        if (!observers.contains(o)) {
-            observers.add(o);
-        }
+        this.addObserver(o);
     }
 
-    @Override
     public void detach(Observer o) {
-        observers.remove(o);
+        this.deleteObserver(o);
     }
 
-    @Override
     public void notifyObservers(String msg) {
-        for (Observer o : new ArrayList<>(observers)) {
-            o.update(this, msg);
-        }
+        setChanged();
+        super.notifyObservers(msg);
     }
 
     // Getters and Setters
