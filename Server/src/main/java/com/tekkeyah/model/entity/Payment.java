@@ -2,7 +2,7 @@ package com.tekkeyah.model.entity;
 
 import com.tekkeyah.pattern.strategy.PaymentStrategy;
 import jakarta.persistence.*;
-import java.time.LocalDateTime;g
+import java.time.LocalDateTime;
 import java.util.Observable;
 import java.util.Observer;
 
