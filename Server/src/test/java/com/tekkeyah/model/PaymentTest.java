@@ -3,8 +3,6 @@ package com.tekkeyah.model;
 import com.tekkeyah.model.entity.*;
 import com.tekkeyah.pattern.factory.DonationPaymentCreator;
 import com.tekkeyah.pattern.factory.TicketPaymentCreator;
-import com.tekkeyah.pattern.observer.Observer;
-import com.tekkeyah.pattern.observer.Subject;
 import com.tekkeyah.pattern.strategy.CardPayment;
 import com.tekkeyah.pattern.strategy.CashPayment;
 import com.tekkeyah.pattern.strategy.CheckPayment;
@@ -12,6 +10,8 @@ import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Observable;
+import java.util.Observer;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -51,7 +51,7 @@ class PaymentTest {
         payment.setMethod(new CardPayment("4321"));
 
         List<String> messages = new ArrayList<>();
-        Observer testObserver = (Subject source, String msg) -> messages.add(msg);
+        Observer testObserver = (Observable source, Object msg) -> messages.add(String.valueOf(msg));
         payment.attach(testObserver);
 
         boolean processed = payment.process();
@@ -95,4 +95,3 @@ class PaymentTest {
         assertInstanceOf(TicketPayment.class, ticketPay);
     }
 }
-
