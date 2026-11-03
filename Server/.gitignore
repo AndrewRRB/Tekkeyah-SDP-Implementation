@@ -1,0 +1,23 @@
+# Build output
+target/
+bin/
+out/
+build/
+*.class
+*.jar
+
+# IDE
+.idea/
+*.iml
+.vscode/
+.settings/
+.classpath
+.project
+nbproject/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Local config / secrets
+*.env
