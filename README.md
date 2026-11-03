@@ -53,11 +53,11 @@ Based on the system class diagram, the core design patterns implemented are:
 
 | Pattern | Role in System | Key Classes / Interfaces |
 | :--- | :--- | :--- |
-| **Observer** | Notifies users and entities upon state changes (e.g. event status updates, donation receipts, payment status). | `Subject`, `Observer`, `Event` (`Fundraiser`, `Outreach`), `Donation`, `Payment`, `User` (`Volunteer`, `Donor`, `Beneficiary`, `Admin`). |
+| **Observer** | Notifies users and entities upon state changes (e.g. event status updates, donation receipts, payment status). | `Subject`, `Observer`, `EventCreator` (`Fundraiser`, `Outreach`), `Donation`, `Payment`, `User` (`Volunteer`, `Donor`, `Beneficiary`, `Admin`). |
 | **Strategy (Notification)** | Allows users to dynamically select their preferred notification channel. | `NotificationStrategy`, `EmailNotification`, `SMSNotification`, `WhatsAppNotification`. |
 | **Strategy (Payment)** | Supports interchangeable payment methods for ticket purchases and donations. | `PaymentStrategy`, `CardPayment`, `CashPayment`. |
 | **Decorator** | Dynamically attaches additional responsibilities and permissions to volunteer roles. | `VolunteerRole` (Component), `BasicVolunteerRole` (Concrete Component), `VolunteerRoleDecorator` (Decorator), `DriverRole`, `CookRole` (Concrete Decorators). |
-| **Factory Method** | Encapsulates the instantiation and configuration of specialized event types. | `EventCreator` (Creator), `FundraiserCreator`, `OutreachCreator` (Concrete Creators), `Event` (Product). |
+| **Factory Method** | Encapsulates the instantiation and configuration of specialized event types. | `EventCreator` (Creator), `FundraiserCreator`, `OutreachCreator` (Concrete Creators), `EventCreator` (Product). |
 | **Singleton** | Ensures a single shared instance for direct database operations. | `DatabaseConnection`. |
 
 ---
