@@ -3,9 +3,11 @@ import { DollarSign, Utensils, Package, CreditCard, Banknote, ArrowRight, Shield
 import Card from '../common/Card';
 import Button from '../common/Button';
 import { donationService } from '../../services/donationService';
+import { toCardPayload, validateCard } from '../../utils/card';
+import CardDetailsFields from './CardDetailsFields';
 import './ContributionWidget.css';
 
-export default function ContributionWidget({ onReceiptGenerated }) {
+export default function ContributionWidget({ userId, onReceiptGenerated }) {
   const [pathway, setPathway] = useState('MONETARY'); // 'MONETARY' | 'MEAL' | 'IN_KIND'
   const [frequency, setFrequency] = useState('ONE_TIME'); // 'ONE_TIME' | 'MONTHLY'
   const [selectedAmount, setSelectedAmount] = useState(100);
@@ -13,6 +15,9 @@ export default function ContributionWidget({ onReceiptGenerated }) {
   const [isCustom, setIsCustom] = useState(false);
   const [beneficiary, setBeneficiary] = useState('General Community Relief Fund');
   const [paymentGateway, setPaymentGateway] = useState('CARD'); // 'CARD' | 'CASH'
+  const [card, setCard] = useState({ holderName: '', number: '', expiry: '', cvv: '' });
+  const [cardErrors, setCardErrors] = useState({});
+  const [submitError, setSubmitError] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   // Meal state
@@ -41,8 +46,20 @@ export default function ContributionWidget({ onReceiptGenerated }) {
     setSelectedAmount(parseFloat(val) || 0);
   };
 
+  const handleCardChange = (next) => {
+    setCard(next);
+    if (Object.keys(cardErrors).length) setCardErrors({});
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setSubmitError(null);
+    const payingByCard = pathway === 'MONETARY' && paymentGateway === 'CARD';
+    if (payingByCard) {
+      const errors = validateCard(card);
+      setCardErrors(errors);
+      if (Object.keys(errors).length) return;
+    }
     setIsSubmitting(true);
 
     try {
@@ -50,29 +67,29 @@ export default function ContributionWidget({ onReceiptGenerated }) {
       if (pathway === 'MONETARY') {
         const finalAmt = isCustom ? parseFloat(customAmount) || 0 : selectedAmount;
         receipt = await donationService.submitMonetaryDonation({
+          userId,
           amount: finalAmt,
-          frequency,
-          beneficiary,
-          paymentMethod: paymentGateway === 'CARD' ? 'Credit / Debit Card' : 'Cash Payment',
+          paymentMethod: paymentGateway, // 'CARD' | 'CASH' -> PaymentStrategy on the server
+          card: payingByCard ? toCardPayload(card) : null,
         });
       } else if (pathway === 'MEAL') {
         receipt = await donationService.submitMealDonation({
-          mealCount,
-          kitchenDepot,
-          estimatedValue: mealCount * 7.5,
+          userId,
+          name: `${mealCount} hot meals - ${kitchenDepot}`,
+          mealCost: mealCount * 7.5,
         });
       } else {
         receipt = await donationService.submitInKindDonation({
-          itemDescription: inKindItem,
-          quantity: inKindQty,
-          warehouseBay: warehouseLocation,
+          userId,
+          items: [`${inKindQty} x ${inKindItem} (${warehouseLocation})`],
           estimatedValue: inKindQty * 25,
         });
       }
 
+      if (payingByCard) setCard({ holderName: '', number: '', expiry: '', cvv: '' });
       onReceiptGenerated?.(receipt);
     } catch (err) {
-      alert(`Submission error: ${err.message}`);
+      setSubmitError(err.message);
     } finally {
       setIsSubmitting(false);
     }
@@ -224,18 +241,22 @@ export default function ContributionWidget({ onReceiptGenerated }) {
             <div className="tk-donate-field">
               <label className="tk-donate-field__label">Select Payment Method</label>
               <div className="tk-donate-payments">
-                <div
+                <button
+                  type="button"
+                  aria-pressed={paymentGateway === 'CARD'}
                   className={`tk-donate-payment-card ${paymentGateway === 'CARD' ? 'tk-donate-payment-card--active' : ''}`}
                   onClick={() => setPaymentGateway('CARD')}
                 >
                   <CreditCard size={20} />
                   <div>
                     <span className="tk-donate-payment-card__title">Credit / Debit Card</span>
-                    <span className="tk-donate-payment-card__desc">Visa ending in •••• 4821</span>
+                    <span className="tk-donate-payment-card__desc">Visa, Mastercard, Amex</span>
                   </div>
-                </div>
+                </button>
 
-                <div
+                <button
+                  type="button"
+                  aria-pressed={paymentGateway === 'CASH'}
                   className={`tk-donate-payment-card ${paymentGateway === 'CASH' ? 'tk-donate-payment-card--active' : ''}`}
                   onClick={() => setPaymentGateway('CASH')}
                 >
@@ -244,9 +265,13 @@ export default function ContributionWidget({ onReceiptGenerated }) {
                     <span className="tk-donate-payment-card__title">Cash Payment</span>
                     <span className="tk-donate-payment-card__desc">Pay at branch or courier pickup</span>
                   </div>
-                </div>
+                </button>
               </div>
             </div>
+
+            {paymentGateway === 'CARD' && (
+              <CardDetailsFields value={card} onChange={handleCardChange} errors={cardErrors} />
+            )}
           </div>
         )}
 
@@ -341,6 +366,11 @@ export default function ContributionWidget({ onReceiptGenerated }) {
 
         {/* Action Button & Badges */}
         <div className="tk-donate-submit-wrap">
+          {submitError && (
+            <p className="tk-donate-error" role="alert">
+              {submitError}
+            </p>
+          )}
           <Button
             type="submit"
             variant="primary"

@@ -205,6 +205,9 @@
 }
 
 .tk-donate-payment-card {
+  width: 100%;
+  text-align: left;
+  font: inherit;
   display: flex;
   align-items: center;
   gap: 0.85rem;
@@ -213,11 +216,23 @@
   border-radius: var(--tk-radius-md);
   background-color: var(--tk-surface-card);
   cursor: pointer;
-  transition: all var(--tk-transition-fast);
+  transition:
+    border-color var(--tk-transition-fast),
+    background-color var(--tk-transition-fast),
+    transform 0.12s ease-out;
 }
 
 .tk-donate-payment-card:hover {
   border-color: var(--tk-green-400);
+}
+
+.tk-donate-payment-card:active {
+  transform: scale(0.97);
+}
+
+.tk-donate-payment-card:focus-visible {
+  outline: 2px solid var(--tk-green-700);
+  outline-offset: 2px;
 }
 
 .tk-donate-payment-card--active {
@@ -241,6 +256,15 @@
 }
 
 /* Submit */
+.tk-donate-error {
+  padding: 0.75rem 1rem;
+  border-radius: var(--tk-radius-md);
+  font-size: 0.85rem;
+  font-weight: 600;
+  background-color: var(--tk-status-danger-bg);
+  color: var(--tk-status-danger-text);
+}
+
 .tk-donate-submit-wrap {
   display: flex;
   flex-direction: column;

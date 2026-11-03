@@ -1,11 +1,18 @@
 import { Link, NavLink, useLocation } from 'react-router-dom';
-import { HeartHandshake, Bell, MessageSquare, ArrowRight, User } from 'lucide-react';
+import { HeartHandshake, ArrowRight, User, Settings, LogOut } from 'lucide-react';
 import Badge from '../common/Badge';
+import { channelLabel } from '../../data/notificationChannels';
+import { authService } from '../../services/authService';
 import './Navbar.css';
 
 export default function Navbar({ user }) {
   const location = useLocation();
-  const isGivingPage = location.pathname.startsWith('/giving-hub');
+
+  // Full reload so every page re-reads the (now empty) session
+  const handleSignOut = () => {
+    authService.logout();
+    window.location.assign('/');
+  };
 
   return (
     <header className="tk-navbar-container">
@@ -52,44 +59,40 @@ export default function Navbar({ user }) {
 
         {/* Right Actions */}
         <div className="tk-navbar__actions">
-          {isGivingPage ? (
+          {user ? (
             <>
               <Badge variant="default" size="sm" className="tk-navbar__whatsapp-badge">
                 <span className="tk-navbar__status-dot" />
-                WhatsApp Dispatch Active
+                {channelLabel(user.channel)} alerts on
               </Badge>
 
-              <button type="button" className="tk-navbar__icon-btn" aria-label="Notifications">
-                <Bell size={18} />
-                <span className="tk-navbar__notif-badge" />
-              </button>
-
-              <div className="tk-navbar__profile-pill">
+              <Link to="/account" className="tk-navbar__profile-pill" aria-label="Account settings">
                 <div className="tk-navbar__avatar">
                   <User size={16} />
                 </div>
                 <div className="tk-navbar__profile-info">
-                  <span className="tk-navbar__profile-name">
-                    {user?.name || 'Youssef Al-Qassimi'}
-                  </span>
-                  <span className="tk-navbar__profile-role">
-                    Patron Circle {user?.circleId || '#9021'}
-                  </span>
+                  <span className="tk-navbar__profile-name">{user.name}</span>
+                  <span className="tk-navbar__profile-role">{user.role}</span>
                 </div>
-              </div>
+                <Settings size={15} className="tk-navbar__profile-gear" aria-hidden="true" />
+              </Link>
+
+              <button
+                type="button"
+                className="tk-navbar__icon-btn"
+                aria-label="Sign out"
+                title="Sign out"
+                onClick={handleSignOut}
+              >
+                <LogOut size={18} />
+              </button>
             </>
           ) : (
             <>
-              <button type="button" className="tk-navbar__icon-btn" aria-label="Notifications">
-                <Bell size={18} />
-              </button>
-              <button type="button" className="tk-navbar__icon-btn" aria-label="Messages">
-                <MessageSquare size={18} />
-              </button>
               <Link to="/auth" className="tk-navbar__auth-link">
                 Sign In
               </Link>
-              <Link to="/giving-hub" className="tk-navbar__cta-btn">
+              <Link to="/auth" className="tk-navbar__cta-btn">
                 <span>Get Involved</span>
                 <ArrowRight size={15} />
               </Link>

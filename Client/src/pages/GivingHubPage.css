@@ -31,3 +31,12 @@
     transform: translateY(0);
   }
 }
+
+.tk-giving-hub-error {
+  padding: 0.75rem 1rem;
+  margin-bottom: 1rem;
+  border-radius: var(--tk-radius-md);
+  font-size: 0.85rem;
+  background-color: var(--tk-status-danger-bg);
+  color: var(--tk-status-danger-text);
+}

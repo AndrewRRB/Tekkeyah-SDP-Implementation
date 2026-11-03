@@ -3,6 +3,10 @@ import { useNavigate } from 'react-router-dom';
 import { Mail, Lock, Eye, EyeOff, User, ArrowRight, ShieldCheck } from 'lucide-react';
 import { authService } from '../../services/authService';
 import Button from '../common/Button';
+import PhoneField from '../forms/PhoneField';
+import ChannelSelector from '../forms/ChannelSelector';
+import { DEFAULT_PHONE_COUNTRY } from '../../data/phoneCountries';
+import { validatePhone } from '../../utils/phone';
 import './AuthCard.css';
 
 export default function AuthCard({ onAuthSuccess }) {
@@ -19,6 +23,18 @@ export default function AuthCard({ onAuthSuccess }) {
     fullName: '',
     role: 'DONOR',
   });
+  const [phone, setPhone] = useState({ dialCode: DEFAULT_PHONE_COUNTRY.dialCode, number: '' });
+  const [channel, setChannel] = useState(null);
+  const [fieldErrors, setFieldErrors] = useState({});
+
+  const validateSignUp = () => {
+    const errors = {};
+    const phoneError = validatePhone(phone);
+    if (phoneError) errors.phone = phoneError;
+    if (!channel) errors.channel = 'Choose how we should notify you.';
+    setFieldErrors(errors);
+    return Object.keys(errors).length === 0;
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -27,23 +43,26 @@ export default function AuthCard({ onAuthSuccess }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setIsLoading(true);
     setErrorMessage(null);
+    if (mode === 'SIGN_UP' && !validateSignUp()) return;
+    setIsLoading(true);
 
     try {
       if (mode === 'SIGN_IN') {
         const user = await authService.login({
-          username: formData.username || 'youssef@tekkeyah.org',
+          email: formData.username.trim(),
           password: formData.password,
-          rememberDevice,
         });
         onAuthSuccess?.(user);
         navigate('/giving-hub');
       } else {
         const user = await authService.register({
           fullName: formData.fullName,
-          email: formData.username,
+          email: formData.username.trim(),
           password: formData.password,
+          countryCode: phone.dialCode,
+          phone: phone.number,
+          channel,
           role: formData.role,
         });
         onAuthSuccess?.(user);
@@ -77,7 +96,7 @@ export default function AuthCard({ onAuthSuccess }) {
             role="tab"
             aria-selected={mode === 'SIGN_IN'}
             className={`tk-auth-card__toggle-pill ${mode === 'SIGN_IN' ? 'tk-auth-card__toggle-pill--active' : ''}`}
-            onClick={() => setMode('SIGN_IN')}
+            onClick={() => { setMode('SIGN_IN'); setFieldErrors({}); }}
           >
             Sign In
           </button>
@@ -86,7 +105,7 @@ export default function AuthCard({ onAuthSuccess }) {
             role="tab"
             aria-selected={mode === 'SIGN_UP'}
             className={`tk-auth-card__toggle-pill ${mode === 'SIGN_UP' ? 'tk-auth-card__toggle-pill--active' : ''}`}
-            onClick={() => setMode('SIGN_UP')}
+            onClick={() => { setMode('SIGN_UP'); setFieldErrors({}); }}
           >
             Sign Up
           </button>
@@ -124,14 +143,14 @@ export default function AuthCard({ onAuthSuccess }) {
 
         <div className="tk-auth-card__field">
           <label className="tk-auth-card__label" htmlFor="username">
-            Username or Email
+            Email
           </label>
           <div className="tk-auth-card__input-wrap">
             <Mail size={18} className="tk-auth-card__input-icon" />
             <input
               id="username"
               name="username"
-              type="text"
+              type="email"
               required
               placeholder="name@tekkeyah.org"
               value={formData.username}
@@ -160,6 +179,30 @@ export default function AuthCard({ onAuthSuccess }) {
           </div>
         )}
 
+        {mode === 'SIGN_UP' && (
+          <>
+            <PhoneField
+              value={phone}
+              onChange={(next) => {
+                setPhone(next);
+                if (fieldErrors.phone) setFieldErrors((prev) => ({ ...prev, phone: undefined }));
+              }}
+              error={fieldErrors.phone}
+            />
+            <ChannelSelector
+              name="signup-channel"
+              legend="Notify me by"
+              compact
+              value={channel}
+              onChange={(next) => {
+                setChannel(next);
+                setFieldErrors((prev) => ({ ...prev, channel: undefined }));
+              }}
+              error={fieldErrors.channel}
+            />
+          </>
+        )}
+
         <div className="tk-auth-card__field">
           <div className="tk-auth-card__label-row">
             <label className="tk-auth-card__label" htmlFor="password">
@@ -178,6 +221,7 @@ export default function AuthCard({ onAuthSuccess }) {
               name="password"
               type={showPassword ? 'text' : 'password'}
               required
+              minLength={mode === 'SIGN_UP' ? 8 : undefined}
               placeholder="••••••••••••"
               value={formData.password}
               onChange={handleChange}

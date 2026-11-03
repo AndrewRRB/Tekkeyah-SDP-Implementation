@@ -181,6 +181,8 @@
 
 /* Profile Pill */
 .tk-navbar__profile-pill {
+  min-height: 44px;
+  transition: border-color var(--tk-transition-fast), box-shadow var(--tk-transition-fast), transform 0.12s ease-out;
   display: flex;
   align-items: center;
   gap: 0.6rem;
@@ -228,4 +230,49 @@
   .tk-navbar__links {
     display: none;
   }
+}
+
+.tk-navbar__profile-pill:hover {
+  border-color: var(--tk-green-300);
+  box-shadow: var(--tk-shadow-sm);
+}
+
+.tk-navbar__profile-pill:active {
+  transform: scale(0.97);
+}
+
+.tk-navbar__profile-pill:focus-visible,
+.tk-navbar__icon-btn:focus-visible {
+  outline: 2px solid var(--tk-green-700);
+  outline-offset: 2px;
+}
+
+.tk-navbar__profile-gear {
+  color: var(--tk-text-muted);
+  margin-left: 0.15rem;
+}
+
+/* The channel badge needs room next to the full link row */
+@media (max-width: 1520px) {
+  .tk-navbar__whatsapp-badge {
+    display: none;
+  }
+}
+
+@media (max-width: 640px) {
+  .tk-navbar__profile-info,
+  .tk-navbar__profile-gear {
+    display: none;
+  }
+
+  .tk-navbar__profile-pill {
+    padding: 0.35rem;
+  }
+}
+
+/* 36px visual, 44px hit area */
+.tk-navbar__icon-btn::after {
+  content: '';
+  position: absolute;
+  inset: -4px;
 }

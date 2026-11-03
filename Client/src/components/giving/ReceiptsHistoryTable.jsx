@@ -4,10 +4,9 @@ import Card from '../common/Card';
 import Badge from '../common/Badge';
 import Button from '../common/Button';
 import EmptyState from '../common/EmptyState';
-import { DEFAULT_RECEIPTS_HISTORY } from '../../data/donationPresets';
 import './ReceiptsHistoryTable.css';
 
-export default function ReceiptsHistoryTable({ receipts = DEFAULT_RECEIPTS_HISTORY, onViewReceipt, onGoToDonate }) {
+export default function ReceiptsHistoryTable({ receipts = [], isLoading = false, onRefresh, onViewReceipt, onGoToDonate }) {
   const [filter, setFilter] = useState('ALL'); // 'ALL' | 'MONETARY' | 'IN_KIND'
   const [isRefreshing, setIsRefreshing] = useState(false);
 
@@ -17,9 +16,13 @@ export default function ReceiptsHistoryTable({ receipts = DEFAULT_RECEIPTS_HISTO
     return true;
   });
 
-  const handleRefresh = () => {
+  const handleRefresh = async () => {
     setIsRefreshing(true);
-    setTimeout(() => setIsRefreshing(false), 400);
+    try {
+      await onRefresh?.();
+    } finally {
+      setIsRefreshing(false);
+    }
   };
 
   return (
@@ -60,7 +63,7 @@ export default function ReceiptsHistoryTable({ receipts = DEFAULT_RECEIPTS_HISTO
 
           <button
             type="button"
-            className={`tk-history-card__refresh-btn ${isRefreshing ? 'tk-history-card__refresh-btn--spinning' : ''}`}
+            className={`tk-history-card__refresh-btn ${isRefreshing || isLoading ? 'tk-history-card__refresh-btn--spinning' : ''}`}
             onClick={handleRefresh}
             aria-label="Refresh table records"
           >

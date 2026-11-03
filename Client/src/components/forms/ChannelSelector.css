@@ -1,0 +1,195 @@
+.tk-channels {
+  border: none;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.tk-channels__legend {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--tk-text-primary);
+  margin-bottom: 0.45rem;
+}
+
+.tk-channels__grid {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.tk-channels--compact .tk-channels__grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.6rem;
+}
+
+.tk-channel {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.85rem;
+  min-height: 44px;
+  padding: 1rem 1.1rem;
+  border: 1.5px solid var(--tk-border-light);
+  border-radius: var(--tk-radius-lg);
+  background-color: var(--tk-surface-card);
+  cursor: pointer;
+  transition:
+    border-color var(--tk-transition-fast),
+    background-color var(--tk-transition-fast),
+    box-shadow var(--tk-transition-fast),
+    transform 0.12s ease-out;
+}
+
+.tk-channels--compact .tk-channel {
+  align-items: center;
+  padding: 0.65rem 0.75rem;
+  border-radius: var(--tk-radius-md);
+  gap: 0.6rem;
+}
+
+.tk-channel:hover {
+  border-color: var(--tk-green-400);
+}
+
+.tk-channel:active {
+  transform: scale(0.97);
+}
+
+.tk-channel--checked {
+  border-color: var(--tk-green-800);
+  background-color: var(--tk-green-50);
+  box-shadow: var(--tk-shadow-sm);
+}
+
+.tk-channel__radio {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.tk-channel:has(.tk-channel__radio:focus-visible) {
+  outline: 2px solid var(--tk-green-700);
+  outline-offset: 2px;
+}
+
+.tk-channel__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 38px;
+  height: 38px;
+  /* concentric with the card: 16px outer - ~6px gap */
+  border-radius: var(--tk-radius-md);
+  background-color: var(--tk-green-100);
+  color: var(--tk-green-800);
+  transition: background-color var(--tk-transition-fast), color var(--tk-transition-fast);
+}
+
+.tk-channels--compact .tk-channel__icon {
+  width: 30px;
+  height: 30px;
+  border-radius: var(--tk-radius-sm);
+}
+
+.tk-channel--checked .tk-channel__icon {
+  background-color: var(--tk-green-800);
+  color: #fff;
+}
+
+.tk-channel__text {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  min-width: 0;
+  flex: 1;
+}
+
+.tk-channel__title-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.tk-channel__title {
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: var(--tk-text-primary);
+}
+
+.tk-channels--compact .tk-channel__title {
+  font-size: 0.85rem;
+}
+
+.tk-channel__badge {
+  font-size: 0.66rem;
+  font-weight: 800;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  padding: 0.1rem 0.45rem;
+  border-radius: var(--tk-radius-full);
+  background-color: var(--tk-green-800);
+  color: #fff;
+}
+
+.tk-channel__desc {
+  font-size: 0.8rem;
+  line-height: 1.45;
+  color: var(--tk-text-muted);
+  white-space: normal;
+  text-wrap: pretty;
+}
+
+.tk-channel__check {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 1.5px solid var(--tk-border-light);
+  color: transparent;
+  transition: all var(--tk-transition-fast);
+}
+
+.tk-channel--checked .tk-channel__check {
+  border-color: var(--tk-green-800);
+  background-color: var(--tk-green-800);
+  color: #fff;
+  animation: tk-channel-check-in 0.2s ease-out;
+}
+
+@keyframes tk-channel-check-in {
+  from {
+    transform: scale(0.25);
+    opacity: 0;
+    filter: blur(4px);
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+    filter: blur(0);
+  }
+}
+
+.tk-channels__error {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--tk-status-danger-text);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tk-channel,
+  .tk-channel--checked .tk-channel__check {
+    transition: none;
+    animation: none;
+  }
+}
+
+@media (max-width: 420px) {
+  .tk-channels--compact .tk-channels__grid {
+    grid-template-columns: 1fr;
+  }
+}

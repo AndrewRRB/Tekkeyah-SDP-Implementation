@@ -4,53 +4,30 @@ const SESSION_STORAGE_KEY = 'tekkeyah_user_session';
 
 export const authService = {
   /**
-   * Standard login
+   * Log in with email + password. Throws with the server's message on failure.
    */
-  async login({ username, password, rememberDevice }) {
-    try {
-      const data = await apiClient('/auth/login', {
-        method: 'POST',
-        body: { username, password, rememberDevice },
-      });
-      this.setSession(data);
-      return data;
-    } catch {
-      const fallbackUser = {
-        id: 'usr_9021',
-        name: username.split('@')[0] || 'Youssef Al-Qassimi',
-        email: username.includes('@') ? username : `${username}@tekkeyah.org`,
-        role: 'Donor',
-        circleId: '#9021',
-        isLoggedIn: true,
-      };
-      this.setSession(fallbackUser);
-      return fallbackUser;
-    }
+  async login({ email, password }) {
+    const user = await apiClient('/auth/login', {
+      method: 'POST',
+      body: { email, password },
+    });
+    this.setSession(user);
+    return user;
   },
 
   /**
-   * Register a new user account
+   * Create an account.
+   * role: 'DONOR' | 'VOLUNTEER' | 'BENEFICIARY'
+   * channel: 'EMAIL' | 'SMS' | 'WHATSAPP' | 'SOCIAL_MEDIA'
+   * countryCode: '+20', phone: national number as typed
    */
-  async register({ fullName, email, password, role = 'DONOR' }) {
-    try {
-      const data = await apiClient('/auth/register', {
-        method: 'POST',
-        body: { fullName, email, password, role },
-      });
-      this.setSession(data);
-      return data;
-    } catch {
-      const newUser = {
-        id: `usr_${Date.now()}`,
-        name: fullName || 'New Contributor',
-        email,
-        role: role === 'DONOR' ? 'Donor' : 'Volunteer',
-        circleId: `#${Math.floor(1000 + Math.random() * 9000)}`,
-        isLoggedIn: true,
-      };
-      this.setSession(newUser);
-      return newUser;
-    }
+  async register({ fullName, email, password, countryCode, phone, channel, role = 'DONOR' }) {
+    const user = await apiClient('/auth/signup', {
+      method: 'POST',
+      body: { fullName, email, password, countryCode, phone, channel, role },
+    });
+    this.setSession(user);
+    return user;
   },
 
   /**
@@ -74,6 +51,10 @@ export const authService = {
   },
 
   logout() {
-    localStorage.removeItem(SESSION_STORAGE_KEY);
+    try {
+      localStorage.removeItem(SESSION_STORAGE_KEY);
+    } catch {
+      // Storage unavailable
+    }
   },
 };

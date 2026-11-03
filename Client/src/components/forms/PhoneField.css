@@ -1,0 +1,113 @@
+.tk-phone-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.tk-phone-field__label {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--tk-text-primary);
+}
+
+.tk-phone-field__control {
+  display: flex;
+  align-items: stretch;
+  min-height: 46px;
+  border: 1.5px solid var(--tk-border-light);
+  border-radius: var(--tk-radius-md);
+  background-color: var(--tk-surface-card);
+  transition: border-color var(--tk-transition-fast), box-shadow var(--tk-transition-fast);
+}
+
+.tk-phone-field__control:focus-within {
+  border-color: var(--tk-green-700);
+  box-shadow: 0 0 0 3px rgba(35, 88, 66, 0.15);
+}
+
+.tk-phone-field__control--invalid {
+  border-color: var(--tk-status-danger-text);
+}
+
+/* Native select stays on top (invisible) so keyboard + screen readers work */
+.tk-phone-field__country {
+  position: relative;
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  border-right: 1.5px solid var(--tk-border-light);
+  background-color: var(--tk-surface-inset);
+  border-radius: calc(var(--tk-radius-md) - 1.5px) 0 0 calc(var(--tk-radius-md) - 1.5px);
+}
+
+.tk-phone-field__select {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.tk-phone-field__country-display {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0 0.7rem 0 0.85rem;
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--tk-text-primary);
+  font-variant-numeric: tabular-nums;
+  pointer-events: none;
+}
+
+.tk-phone-field__iso {
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  color: var(--tk-green-800);
+  padding: 0.1rem 0.3rem;
+  border-radius: 4px;
+  background-color: var(--tk-green-100);
+}
+
+.tk-phone-field__dial {
+  min-width: 2.6rem;
+}
+
+.tk-phone-field__country:focus-within .tk-phone-field__country-display {
+  color: var(--tk-green-800);
+}
+
+.tk-phone-field__number {
+  position: relative;
+  display: flex;
+  align-items: center;
+  flex: 1;
+  min-width: 0;
+}
+
+.tk-phone-field__icon {
+  position: absolute;
+  left: 0.8rem;
+  color: var(--tk-text-muted);
+}
+
+.tk-phone-field__input {
+  width: 100%;
+  height: 100%;
+  padding: 0.7rem 0.9rem 0.7rem 2.3rem;
+  border: none;
+  outline: none;
+  background: transparent;
+  color: var(--tk-text-primary);
+  font-size: 0.92rem;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.02em;
+}
+
+.tk-phone-field__error {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--tk-status-danger-text);
+  text-wrap: pretty;
+}

@@ -87,3 +87,10 @@
     justify-content: center;
   }
 }
+
+@media (max-width: 520px) {
+  .tk-giving-header__tabs {
+    max-width: 100%;
+    overflow-x: auto;
+  }
+}

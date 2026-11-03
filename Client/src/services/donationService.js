@@ -1,97 +1,42 @@
 import { apiClient } from './api';
 
+/**
+ * Every call hits the Spring backend; nothing is faked on failure.
+ * Responses are DonationResponse objects:
+ * { donationId, type, amount, description, items, mealWeight, transactionRef,
+ *   paymentMethod, receiptId, receiptNumber, issuedAt, userId }
+ */
 export const donationService = {
   /**
-   * Submit a monetary donation
+   * paymentMethod: 'CARD' | 'CASH' | 'CHECK'
+   * card (CARD only): { holderName, number, expiryMonth, expiryYear, cvv }.
+   * The server keeps only the brand + last four digits.
    */
-  async submitMonetaryDonation(payload) {
-    try {
-      return await apiClient('/donations/monetary', {
-        method: 'POST',
-        body: payload,
-      });
-    } catch {
-      return {
-        receiptNumber: `TK-2025-${Math.floor(1000 + Math.random() * 9000)}`,
-        donationType: 'Monetary',
-        amount: payload.amount,
-        beneficiary: payload.beneficiary || 'General Community Relief Fund',
-        paymentMethod: payload.paymentMethod || 'Credit / Debit Card',
-        timestamp: new Date().toISOString(),
-        status: 'COMPLETED',
-      };
-    }
+  submitMonetaryDonation({ userId, amount, paymentMethod, card }) {
+    return apiClient('/donations/monetary', {
+      method: 'POST',
+      body: { userId, amount, paymentMethod, card: paymentMethod === 'CARD' ? card : null },
+    });
+  },
+
+  submitMealDonation({ userId, name, mealWeight = 0, mealCost }) {
+    return apiClient('/donations/meal', {
+      method: 'POST',
+      body: { userId, name, mealWeight, mealCost },
+    });
+  },
+
+  submitInKindDonation({ userId, items, estimatedValue }) {
+    return apiClient('/donations/in-kind', {
+      method: 'POST',
+      body: { userId, items, estimatedValue },
+    });
   },
 
   /**
-   * Submit a meal donation
+   * All donations of one user, newest first.
    */
-  async submitMealDonation(payload) {
-    try {
-      return await apiClient('/donations/meal', {
-        method: 'POST',
-        body: payload,
-      });
-    } catch {
-      return {
-        receiptNumber: `TK-2025-${Math.floor(1000 + Math.random() * 9000)}`,
-        donationType: 'Meal',
-        amount: payload.estimatedValue || 150,
-        count: payload.mealCount || 50,
-        kitchenDepot: payload.kitchenDepot || 'District 4 Kitchen',
-        paymentMethod: 'Direct Kitchen Drop-off',
-        timestamp: new Date().toISOString(),
-        status: 'COMPLETED',
-      };
-    }
-  },
-
-  /**
-   * Submit an in-kind donation
-   */
-  async submitInKindDonation(payload) {
-    try {
-      return await apiClient('/donations/in-kind', {
-        method: 'POST',
-        body: payload,
-      });
-    } catch {
-      return {
-        receiptNumber: `TK-2025-${Math.floor(1000 + Math.random() * 9000)}`,
-        donationType: 'In-Kind',
-        amount: payload.estimatedValue || 300,
-        itemDescription: payload.itemDescription || 'Thermal Blankets',
-        paymentMethod: 'Physical Delivery',
-        timestamp: new Date().toISOString(),
-        status: 'COMPLETED',
-      };
-    }
-  },
-
-  /**
-   * Fetch donation history
-   */
-  async getDonationHistory() {
-    try {
-      return await apiClient('/donations/history');
-    } catch {
-      return [];
-    }
-  },
-
-  /**
-   * Fetch Tax Summary
-   */
-  async getTaxSummary(year = 2024) {
-    try {
-      return await apiClient(`/donations/tax-summary?year=${year}`);
-    } catch {
-      return {
-        year,
-        validatedSum: 4150.00,
-        organization: 'Tekkeyah Foundation',
-        taxStatus: '501(c)(3) Exempt',
-      };
-    }
+  getDonationHistory(userId) {
+    return apiClient(`/donations?userId=${encodeURIComponent(userId)}`);
   },
 };

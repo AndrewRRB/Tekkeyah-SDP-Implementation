@@ -1,0 +1,131 @@
+.tk-card-fields {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+  padding: 1.25rem;
+  border-radius: var(--tk-radius-lg);
+  background-color: var(--tk-surface-card-subtle);
+  border: 1px solid var(--tk-border-card);
+  animation: tk-card-fields-in 0.22s ease-out;
+}
+
+@keyframes tk-card-fields-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.tk-card-fields__row {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  min-width: 0;
+}
+
+.tk-card-fields__row--full {
+  grid-column: 1 / -1;
+}
+
+.tk-card-fields__label {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--tk-text-primary);
+}
+
+.tk-card-fields__input-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.tk-card-fields__icon {
+  position: absolute;
+  left: 0.85rem;
+  color: var(--tk-text-muted);
+  pointer-events: none;
+}
+
+.tk-card-fields__input {
+  width: 100%;
+  min-height: 46px;
+  padding: 0.75rem 1rem 0.75rem 2.5rem;
+  border: 1.5px solid var(--tk-border-light);
+  /* concentric: 16px container - 1.25rem padding feels right at 10px */
+  border-radius: var(--tk-radius-md);
+  background-color: var(--tk-surface-card);
+  color: var(--tk-text-primary);
+  font-size: 0.95rem;
+  outline: none;
+  transition: border-color var(--tk-transition-fast), box-shadow var(--tk-transition-fast);
+}
+
+.tk-card-fields__input--plain {
+  padding-left: 1rem;
+}
+
+.tk-card-fields__input--mono {
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.04em;
+}
+
+.tk-card-fields__input:focus {
+  border-color: var(--tk-green-700);
+  box-shadow: 0 0 0 3px rgba(35, 88, 66, 0.15);
+}
+
+.tk-card-fields__input-wrap--invalid .tk-card-fields__input {
+  border-color: var(--tk-status-danger-text);
+}
+
+.tk-card-fields__brand {
+  position: absolute;
+  right: 0.75rem;
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  padding: 0.2rem 0.5rem;
+  border-radius: var(--tk-radius-full);
+  background-color: var(--tk-green-100);
+  color: var(--tk-green-800);
+  pointer-events: none;
+}
+
+.tk-card-fields__error {
+  font-size: 0.76rem;
+  font-weight: 600;
+  color: var(--tk-status-danger-text);
+}
+
+.tk-card-fields__note {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.45rem;
+  font-size: 0.76rem;
+  color: var(--tk-text-muted);
+  line-height: 1.45;
+  text-wrap: pretty;
+}
+
+.tk-card-fields__note svg {
+  flex-shrink: 0;
+  margin-top: 0.15rem;
+}
+
+@media (max-width: 560px) {
+  .tk-card-fields {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tk-card-fields {
+    animation: none;
+  }
+}
