@@ -5,3 +5,4 @@ public interface Subject {
     void detach(Observer o);
     void notifyObservers(String msg);
 }
+
