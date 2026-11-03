@@ -85,6 +85,11 @@ public class User implements Observer {
     @Column(name = "phone")
     private String phone;
 
+    // UML: - passwordHash: String. Salted hash only, never the raw password
+    // (see util/PasswordHasher). Nullable so users inserted without one still load.
+    @Column(name = "password_hash")
+    private String passwordHash;
+
     // STRATEGY: the strategy OBJECT is not stored (it is a live object)...
     @Transient
     protected NotificationStrategy strategy;
@@ -195,4 +200,8 @@ public class User implements Observer {
     public String getPhone() { return phone; }
 
     public void setPhone(String phone) { this.phone = phone; }
+
+    public String getPasswordHash() { return passwordHash; }
+
+    public void setPasswordHash(String passwordHash) { this.passwordHash = passwordHash; }
 }

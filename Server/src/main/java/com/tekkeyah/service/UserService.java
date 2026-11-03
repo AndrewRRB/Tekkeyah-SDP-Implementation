@@ -4,6 +4,7 @@ import com.tekkeyah.exception.DuplicateResourceException;
 import com.tekkeyah.exception.ResourceNotFoundException;
 import com.tekkeyah.model.DTO.UserResponse;
 import com.tekkeyah.model.entity.User;
+import com.tekkeyah.model.enums.AccountRole;
 import com.tekkeyah.model.enums.NotificationChannel;
 import com.tekkeyah.model.enums.Skill;
 import com.tekkeyah.pattern.strategy.EmailNotification;
@@ -16,6 +17,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Locale;
+import java.util.Optional;
 import java.util.Set;
 
 /**
@@ -74,21 +77,39 @@ public class UserService {
 
     public UserResponse createUser(String name, String emailAddress, String phone,
                                    NotificationChannel channel) {
-        if (name == null || name.isBlank()) {
-            throw new IllegalArgumentException("name must not be blank");
-        }
-        if (emailAddress == null || emailAddress.isBlank() || !emailAddress.contains("@")) {
-            throw new IllegalArgumentException("a valid email is required");
-        }
-        String cleanEmail = emailAddress.trim().toLowerCase();
-        if (repository.existsByEmail(cleanEmail)) {
-            throw new DuplicateResourceException("email already registered: " + cleanEmail);
-        }
-        NotificationChannel chosen = (channel != null) ? channel : NotificationChannel.EMAIL;
+        return UserResponse.from(repository.save(newUser(name, emailAddress, phone, channel)));
+    }
 
-        User user = new User(name.trim(), cleanEmail, phone, strategyFor(chosen));
-        user.setNotificationChannel(chosen);
-        return UserResponse.from(repository.save(user));
+    // ------------------- used by AuthService / DonationService -------------
+
+    /**
+     * Sign-up: same rules as createUser, plus the password hash and the role
+     * profile the person picked. One save persists the User and (cascade) the profile.
+     */
+    User registerAccount(String name, String emailAddress, String phone,
+                         NotificationChannel channel, String passwordHash, AccountRole role) {
+        User user = newUser(name, emailAddress, phone, channel);
+        user.setPasswordHash(passwordHash);
+        switch (role != null ? role : AccountRole.DONOR) {
+            case DONOR -> user.becomeDonor();
+            case VOLUNTEER -> user.becomeVolunteer();
+            case BENEFICIARY -> user.becomeBeneficiary();
+        }
+        return repository.save(user);
+    }
+
+    /** Login lookup by (normalized) email; the returned User has its strategy restored. */
+    @Transactional(readOnly = true)
+    Optional<User> findByEmail(String emailAddress) {
+        if (emailAddress == null || emailAddress.isBlank()) {
+            return Optional.empty();
+        }
+        return repository.findByEmail(normalizeEmail(emailAddress)).map(this::hydrate);
+    }
+
+    /** Managed, hydrated entity for other services (e.g. to attach as an Observer). */
+    User loadUser(int id) {
+        return find(id);
     }
 
     @Transactional(readOnly = true)
@@ -169,6 +190,28 @@ public class UserService {
     }
 
     // ------------------------------ helpers --------------------------------
+
+    private User newUser(String name, String emailAddress, String phone, NotificationChannel channel) {
+        if (name == null || name.isBlank()) {
+            throw new IllegalArgumentException("name must not be blank");
+        }
+        if (emailAddress == null || emailAddress.isBlank() || !emailAddress.contains("@")) {
+            throw new IllegalArgumentException("a valid email is required");
+        }
+        String cleanEmail = normalizeEmail(emailAddress);
+        if (repository.existsByEmail(cleanEmail)) {
+            throw new DuplicateResourceException("email already registered: " + cleanEmail);
+        }
+        NotificationChannel chosen = (channel != null) ? channel : NotificationChannel.EMAIL;
+
+        User user = new User(name.trim(), cleanEmail, phone, strategyFor(chosen));
+        user.setNotificationChannel(chosen);
+        return user;
+    }
+
+    private static String normalizeEmail(String emailAddress) {
+        return emailAddress.trim().toLowerCase(Locale.ROOT);
+    }
 
     private User find(int id) {
         User user = repository.findById(id)

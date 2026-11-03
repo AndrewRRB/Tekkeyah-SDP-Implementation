@@ -20,8 +20,10 @@ public abstract class Donation extends Observable/* implements Subject */ {
 
     protected double amount;
 
-    // Depends on Donor from outside the donation classes section (User hierarchy)
-    // protected Donor donor;
+    // UML: # donor: DonorProfile  (many donations -> one donor profile)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "donor_id")
+    protected DonorProfile donor;
 
     // Depends on Beneficiary from outside the donation classes section (User hierarchy)
     // protected Beneficiary beneficiary;
@@ -57,13 +59,13 @@ public abstract class Donation extends Observable/* implements Subject */ {
         this.receipt = receipt;
     }
 
-    // Depends on Donor from outside the donation classes section (User hierarchy)
-    // public Donor getDonor() {
-    //     return donor;
-    // }
-    // public void setDonor(Donor donor) {
-    //     this.donor = donor;
-    // }
+    public DonorProfile getDonor() {
+        return donor;
+    }
+
+    public void setDonor(DonorProfile donor) {
+        this.donor = donor;
+    }
 
     // Depends on Beneficiary from outside the donation classes section (User hierarchy)
     // public Beneficiary getBeneficiary() {

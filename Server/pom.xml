@@ -28,6 +28,9 @@
 	</scm>
 	<properties>
 		<java.version>17</java.version>
+		<!-- Donation / Payment / Event extend java.util.Observable; Spring Data reads its
+		     private fields on startup, which JDK 17+ blocks unless java.util is opened. -->
+		<observable.opens>--add-opens java.base/java.util=ALL-UNNAMED</observable.opens>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -77,6 +80,30 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+					<!-- applies to ./mvnw spring-boot:run -->
+					<jvmArguments>${observable.opens}</jvmArguments>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<configuration>
+					<!-- applies to ./mvnw test -->
+					<argLine>${observable.opens}</argLine>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<configuration>
+					<archive>
+						<manifestEntries>
+							<!-- applies to java -jar target/tekkeyah-*.jar -->
+							<Add-Opens>java.base/java.util</Add-Opens>
+						</manifestEntries>
+					</archive>
+				</configuration>
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
